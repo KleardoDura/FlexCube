@@ -1,7 +1,7 @@
-CREATE OR REPLACE PACKAGE  stpks_stdklei2_custom AS
+CREATE OR REPLACE PACKAGE  stpks_stdklei3_custom AS
   /*-----------------------------------------------------------------------------------------------------
   **
-  ** File Name  : stpks_stdklei2_custom.spc
+  ** File Name  : stpks_stdklei3_custom.spc
   **
   ** Module     : Static Maintenance
   ** 
@@ -38,7 +38,7 @@ FUNCTION Fn_Post_Build_Type_Structure (p_Source            IN     VARCHAR2,
                         p_Action_Code       IN     VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
 p_Addl_Info       IN Cspks_Req_Global.Ty_Addl_Info,
-p_stdklei2     IN  OUT stpks_stdklei2_Main.Ty_stdklei2,
+p_stdklei3     IN  OUT stpks_stdklei3_Main.Ty_stdklei3,
 p_Err_Code          IN OUT VARCHAR2,
 p_Err_Params        IN OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -48,7 +48,7 @@ FUNCTION Fn_Pre_Check_Mandatory(p_Source    IN  VARCHAR2,
                         p_Function_Id       IN     VARCHAR2,
                         p_Action_Code       IN     VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
-p_stdklei2 IN  OUT  stpks_stdklei2_Main.Ty_stdklei2,
+p_stdklei3 IN  OUT  stpks_stdklei3_Main.Ty_stdklei3,
 p_Err_Code       IN  OUT VARCHAR2,
 p_Err_Params     IN  OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -59,7 +59,7 @@ FUNCTION Fn_Post_Check_Mandatory(p_Source    IN  VARCHAR2,
                         p_Action_Code       IN     VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
 p_Pk_Or_Full     IN  VARCHAR2 DEFAULT 'FULL',
-p_stdklei2 IN   stpks_stdklei2_Main.ty_stdklei2,
+p_stdklei3 IN   stpks_stdklei3_Main.ty_stdklei3,
 p_Err_Code       IN  OUT VARCHAR2,
 p_Err_Params     IN  OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -69,9 +69,9 @@ FUNCTION Fn_Pre_Default_And_Validate (p_source    IN  VARCHAR2,
                         p_Function_Id       IN     VARCHAR2,
                         p_Action_Code       IN     VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
-p_stdklei2 IN   stpks_stdklei2_Main.Ty_stdklei2,
-p_Prev_stdklei2 IN OUT stpks_stdklei2_Main.Ty_stdklei2,
-p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+p_stdklei3 IN   stpks_stdklei3_Main.Ty_stdklei3,
+p_Prev_stdklei3 IN OUT stpks_stdklei3_Main.Ty_stdklei3,
+p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
 p_Err_Code       IN  OUT VARCHAR2,
 p_Err_Params     IN  OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -81,9 +81,9 @@ FUNCTION Fn_Post_Default_And_Validate (p_Source    IN  VARCHAR2,
                         p_Function_Id       IN     VARCHAR2,
                         p_Action_Code       IN     VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
-p_stdklei2 IN   stpks_stdklei2_Main.Ty_stdklei2,
-p_Prev_stdklei2 IN OUT stpks_stdklei2_Main.Ty_stdklei2,
-p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+p_stdklei3 IN   stpks_stdklei3_Main.Ty_stdklei3,
+p_Prev_stdklei3 IN OUT stpks_stdklei3_Main.Ty_stdklei3,
+p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
 p_Err_Code       IN  OUT VARCHAR2,
 p_Err_Params     IN  OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -95,9 +95,9 @@ FUNCTION Fn_Pre_Upload_Db (p_Source    IN  VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
 p_Post_Upl_Stat    IN  VARCHAR2,
 p_Multi_Trip_Id    IN  VARCHAR2,
-p_stdklei2 IN stpks_stdklei2_Main.ty_stdklei2,
-p_Prev_stdklei2 IN stpks_stdklei2_Main.ty_stdklei2,
-p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.ty_stdklei2,
+p_stdklei3 IN stpks_stdklei3_Main.ty_stdklei3,
+p_Prev_stdklei3 IN stpks_stdklei3_Main.ty_stdklei3,
+p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.ty_stdklei3,
 p_Err_Code       IN  OUT VARCHAR2,
 p_Err_params     IN  OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -109,9 +109,9 @@ FUNCTION Fn_Post_Upload_Db (p_Source    IN  VARCHAR2,
 p_Child_Function    IN  VARCHAR2,
 p_Post_Upl_Stat    IN  VARCHAR2,
 p_Multi_Trip_Id    IN  VARCHAR2,
-p_stdklei2 IN stpks_stdklei2_Main.ty_stdklei2,
-p_Prev_stdklei2 IN stpks_stdklei2_Main.ty_stdklei2,
-p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.ty_stdklei2,
+p_stdklei3 IN stpks_stdklei3_Main.ty_stdklei3,
+p_Prev_stdklei3 IN stpks_stdklei3_Main.ty_stdklei3,
+p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.ty_stdklei3,
 p_Err_Code       IN  OUT VARCHAR2,
 p_Err_Params     IN  OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -124,8 +124,8 @@ p_Child_Function    IN  VARCHAR2,
 p_Full_Data     IN  VARCHAR2 DEFAULT 'Y',
 p_With_Lock     IN  VARCHAR2 DEFAULT 'N',
 p_QryData_Reqd IN  VARCHAR2 ,
-p_stdklei2 IN   stpks_stdklei2_Main.ty_stdklei2,
-p_Wrk_stdklei2 IN OUT   stpks_stdklei2_Main.ty_stdklei2,
+p_stdklei3 IN   stpks_stdklei3_Main.ty_stdklei3,
+p_Wrk_stdklei3 IN OUT   stpks_stdklei3_Main.ty_stdklei3,
 p_Err_Code          IN OUT VARCHAR2,
 p_Err_Params        IN OUT VARCHAR2)
 RETURN BOOLEAN;
@@ -138,13 +138,13 @@ p_Child_Function    IN  VARCHAR2,
 p_Full_Data     IN  VARCHAR2 DEFAULT 'Y',
 p_With_Lock     IN  VARCHAR2 DEFAULT 'N',
 p_QryData_Reqd IN  VARCHAR2 ,
-p_stdklei2 IN   stpks_stdklei2_Main.Ty_stdklei2,
-p_Wrk_stdklei2 IN OUT   stpks_stdklei2_Main.Ty_stdklei2,
+p_stdklei3 IN   stpks_stdklei3_Main.Ty_stdklei3,
+p_Wrk_stdklei3 IN OUT   stpks_stdklei3_Main.Ty_stdklei3,
 p_Err_Code          IN OUT VARCHAR2,
 p_Err_Params        IN OUT VARCHAR2)
 RETURN BOOLEAN;
 
-END stpks_stdklei2_custom;
+END stpks_stdklei3_custom;
 /
-CREATE OR REPLACE SYNONYM stpkss_stdklei2_custom FOR stpks_stdklei2_custom
+CREATE OR REPLACE SYNONYM stpkss_stdklei3_custom FOR stpks_stdklei3_custom
 /

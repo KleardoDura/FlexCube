@@ -16,7 +16,7 @@
 **  
 **  Written by         : 
 **  Date of creation   : 
-**  File Name          : STDKLEI2_SYS.js
+**  File Name          : STDKLEI3_SYS.js
 **  Purpose            : 
 **  Called From        : 
 **  
@@ -28,51 +28,34 @@
 ****************************************************************************************************************************/
 
 //***** Code for criteria Search *****
-var criteriaSearch  = 'N';
+var criteriaSearch  = '';
 //----------------------------------------------------------------------------------------------------------------------
 //***** FCJ XML FOR THE SCREEN *****
 //----------------------------------------------------------------------------------------------------------------------
-var fieldNameArray = {"BLK_KLEI2":"CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH","BLK_KLEI2_DETAILS":"PRODUCT_CODE~RELATIONSHIP"};
+var fieldNameArray = {"BLK_KLEI3":"CUSTOMER_CATEGORY~CUSTOMER_TYPE~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH","BLK_KLEI3_DETAILS":"CUSTOMER_CATEGORY~CUSTOMER_TYPE~FIELD_DESCRIPTION~MANDATORY_VALIDATIONS"};
 
-var multipleEntryPageSize = {"BLK_KLEI2_DETAILS" :"15" };
+var multipleEntryPageSize = {"BLK_KLEI3_DETAILS" :"15" };
 
 var multipleEntrySVBlocks = "";
 
-var tabMEBlks = {"CVS_KLEI2__TAB_MAIN":"BLK_KLEI2_DETAILS"};
+var tabMEBlks = {"CVS_KLEI3__TAB_MAIN":"BLK_KLEI3_DETAILS"};
 
 var msgxml=""; 
 msgxml += '    <FLD>'; 
-msgxml += '      <FN PARENT="" RELATION_TYPE="1" TYPE="BLK_KLEI2">CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH</FN>'; 
-msgxml += '      <FN PARENT="BLK_KLEI2" RELATION_TYPE="N" TYPE="BLK_KLEI2_DETAILS">PRODUCT_CODE~RELATIONSHIP</FN>'; 
+msgxml += '      <FN PARENT="" RELATION_TYPE="1" TYPE="BLK_KLEI3">CUSTOMER_CATEGORY~CUSTOMER_TYPE~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH</FN>'; 
+msgxml += '      <FN PARENT="BLK_KLEI3" RELATION_TYPE="N" TYPE="BLK_KLEI3_DETAILS">CUSTOMER_CATEGORY~CUSTOMER_TYPE~FIELD_DESCRIPTION~MANDATORY_VALIDATIONS</FN>'; 
 msgxml += '    </FLD>'; 
 
-var strScreenName = "CVS_KLEI2";
+var strScreenName = "CVS_KLEI3";
 var qryReqd = "Y";
 var txnBranchFld = "" ;
 var originSystem = "";
 //----------------------------------------------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------------------------------------------
-//***** FCJ XML FOR SUMMARY SCREEN *****
-//----------------------------------------------------------------------------------------------------------------------
-var msgxml_sum=""; 
-msgxml_sum += '    <FLD>'; 
-msgxml_sum += '      <FN PARENT="" RELATION_TYPE="1" TYPE="BLK_KLEI2">AUTHSTAT~TXNSTAT~RELATIONSHIP~PRODUCT_RESTRICTION~DESCRIPTION~CATEGORY</FN>'; 
-msgxml_sum += '    </FLD>'; 
-
-var detailFuncId = "STDKLEI2";
-var defaultWhereClause = "";
-var defaultOrderByClause ="";
-var multiBrnWhereClause ="";
-var g_SummaryType ="S";
-var g_SummaryBtnCount =0;
-var g_SummaryBlock ="BLK_KLEI2";
-//----------------------------------------------------------------------------------------------------------------------
 //***** CODE FOR DATABINDING *****
 //----------------------------------------------------------------------------------------------------------------------
- var relationArray = {"BLK_KLEI2" : "","BLK_KLEI2_DETAILS" : "BLK_KLEI2~N"}; 
+ var relationArray = {"BLK_KLEI3" : "","BLK_KLEI3_DETAILS" : "BLK_KLEI3~N"}; 
 
- var dataSrcLocationArray = new Array("BLK_KLEI2","BLK_KLEI2_DETAILS"); 
+ var dataSrcLocationArray = new Array("BLK_KLEI3","BLK_KLEI3_DETAILS"); 
  // Array of all Data Sources used in the screen 
 //----------------------------------------------------------------------------------------------------------------------
 //***** CODE FOR QUERY MODE *****
@@ -81,15 +64,16 @@ var detailRequired = true ;
 var intCurrentQueryResultIndex = 0;
 var intCurrentQueryRecordCount = 0;
 
-var queryFields = new Array();    //Values should be set inside STDKLEI2.js, in "BlockName__FieldName" format
-var pkFields    = new Array();    //Values should be set inside STDKLEI2.js, in "BlockName__FieldName" format
-queryFields[0] = "BLK_KLEI2__RELATIONSHIP";
-pkFields[0] = "BLK_KLEI2__RELATIONSHIP";
+var queryFields = new Array();    //Values should be set inside STDKLEI3.js, in "BlockName__FieldName" format
+var pkFields    = new Array();    //Values should be set inside STDKLEI3.js, in "BlockName__FieldName" format
+queryFields[0] = "BLK_KLEI3__CUSTOMER_TYPE";
+pkFields[0] = "BLK_KLEI3__CUSTOMER_TYPE";
+queryFields[1] = "BLK_KLEI3__CUSTOMER_CATEGORY";
+pkFields[1] = "BLK_KLEI3__CUSTOMER_CATEGORY";
 //----------------------------------------------------------------------------------------------------------------------
 //***** CODE FOR AMENDABLE/SUBSYSTEM Fields *****
 //----------------------------------------------------------------------------------------------------------------------
-//***** Fields Amendable while Modification *****
-var modifyAmendArr = {"BLK_KLEI2":["CATEGORY","DESCRIPTION","PRODUCT_RESTRICTION","RELATIONSHIP"]};
+var modifyAmendArr = new Array(); 
 var closeAmendArr = new Array(); 
 var reopenAmendArr = new Array(); 
 var reverseAmendArr = new Array(); 
@@ -97,7 +81,8 @@ var deleteAmendArr = new Array();
 var rolloverAmendArr = new Array(); 
 var confirmAmendArr = new Array(); 
 var liquidateAmendArr = new Array(); 
-var queryAmendArr = new Array(); 
+//***** Fields Amendable while Query *****
+var queryAmendArr = {"BLK_KLEI3":["BTN_KLEARDO_POPULATE"]};
 var authorizeAmendArr = new Array(); 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -107,7 +92,7 @@ var subsysArr    = new Array();
 
 //***** CODE FOR LOVs *****
 //----------------------------------------------------------------------------------------------------------------------
-var lovInfoFlds = {"BLK_KLEI2__CATEGORY__LOV_KLEARDO_CATEGORY":["BLK_KLEI2__CATEGORY~","","N",""],"BLK_KLEI2_DETAILS__PRODUCT_CODE__LOV_KLEARDO_PRODUCT_CODE":["BLK_KLEI2_DETAILS__PRODUCT_CODE~","","N",""]};
+var lovInfoFlds = {"BLK_KLEI3__CUSTOMER_CATEGORY__LOV_KLEARDO_CUSTOMER_CATEGORY":["BLK_KLEI3__CUSTOMER_CATEGORY~","","N",""]};
 var offlineLovInfoFlds = {};
 //----------------------------------------------------------------------------------------------------------------------
 //***** SCRIPT FOR TABS *****
@@ -119,7 +104,7 @@ var strCurrentTabId = 'TAB_MAIN';
 //----------------------------------------------------------------------------------------------------------------------
 //***** SCRIPT FOR MULTIPLE ENTRY BLOCKS *****
 //----------------------------------------------------------------------------------------------------------------------
-var multipleEntryIDs = new Array("BLK_KLEI2_DETAILS");
+var multipleEntryIDs = new Array("BLK_KLEI3_DETAILS");
 var multipleEntryArray = new Array();
 var multipleEntryCells = new Array();
 //----------------------------------------------------------------------------------------------------------------------
@@ -148,15 +133,15 @@ var multipleEntryCells = new Array();
  var ArrCustomModified=new Array();
  // Code for Loading Cluster/Custom js File ends
 
-ArrFuncOrigin["STDKLEI2"]="CUSTOM";
-ArrPrntFunc["STDKLEI2"]="";
-ArrPrntOrigin["STDKLEI2"]="";
-ArrRoutingType["STDKLEI2"]="X";
+ArrFuncOrigin["STDKLEI3"]="CUSTOM";
+ArrPrntFunc["STDKLEI3"]="";
+ArrPrntOrigin["STDKLEI3"]="";
+ArrRoutingType["STDKLEI3"]="X";
 
 
  // Code for Loading Cluster/Custom js File Starts
-ArrClusterModified["STDKLEI2"]="N";
-ArrCustomModified["STDKLEI2"]="Y";
+ArrClusterModified["STDKLEI3"]="N";
+ArrCustomModified["STDKLEI3"]="Y";
 
  // Code for Loading Cluster/Custom js File ends
 

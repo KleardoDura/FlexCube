@@ -1,7 +1,7 @@
-CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
+CREATE OR REPLACE PACKAGE BODY stpks_stdklei3_custom AS
      /*-----------------------------------------------------------------------------------------------------
      **
-     ** File Name  : stpks_stdklei2_custom.sql
+     ** File Name  : stpks_stdklei3_custom.sql
      **
      ** Module     : Static Maintenance
      ** 
@@ -35,7 +35,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       l_Msg     VARCHAR2(32767);
    BEGIN
       IF debug.pkg_debug_on <> 2 THEN
-         l_Msg := 'stpks_stdklei2_Custom ==>'||p_Msg;
+         l_Msg := 'stpks_stdklei3_Custom ==>'||p_Msg;
          Debug.Pr_Debug('ST' ,l_Msg);
       END IF;
    END Dbg;
@@ -54,7 +54,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
                               p_Action_Code       IN     VARCHAR2,
       p_Child_Function    IN  VARCHAR2,
       p_Addl_Info       IN Cspks_Req_Global.Ty_Addl_Info,
-      p_stdklei2     IN  OUT stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3     IN  OUT stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN
@@ -67,7 +67,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others Of stpks_stdklei2_Custom.Fn_Post_Build_type_structure ..');
+         Debug.Pr_Debug('**','In When Others Of stpks_stdklei3_Custom.Fn_Post_Build_type_structure ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -79,7 +79,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
                               p_Function_id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Child_Function    IN  VARCHAR2,
-      p_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
@@ -93,7 +93,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Pre_Check_Mandatory ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Pre_Check_Mandatory ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -106,7 +106,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
                               p_Action_Code       IN     VARCHAR2,
       p_Child_Function    IN  VARCHAR2,
       p_Pk_Or_Full     IN  VARCHAR2 DEFAULT 'FULL',
-      p_stdklei2 IN   stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3 IN   stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
@@ -120,7 +120,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Post_Check_Mandatory ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Post_Check_Mandatory ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -132,9 +132,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Child_Function    IN  VARCHAR2,
-      p_stdklei2 IN   stpks_stdklei2_Main.ty_stdklei2,
-      p_Prev_stdklei2 IN OUT stpks_stdklei2_Main.ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3 IN   stpks_stdklei3_Main.ty_stdklei3,
+      p_Prev_stdklei3 IN OUT stpks_stdklei3_Main.ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
@@ -147,7 +147,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Pre_Default_And_Validate ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Pre_Default_And_Validate ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -159,9 +159,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Child_Function    IN  VARCHAR2,
-      p_stdklei2 IN   stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2 IN OUT stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN   stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3 IN OUT stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
@@ -174,7 +174,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Post_Default_And_Validate ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Post_Default_And_Validate ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -188,9 +188,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       p_Child_Function    IN  VARCHAR2,
       p_Post_Upl_Stat    IN  VARCHAR2,
       p_Multi_Trip_Id    IN  VARCHAR2,
-      p_stdklei2 IN stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2 IN stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3 IN stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
@@ -203,7 +203,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Pre_Upload_Db ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Pre_Upload_Db ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -217,9 +217,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       p_Child_Function    IN  VARCHAR2,
       p_Post_Upl_Stat    IN  VARCHAR2,
       p_Multi_Trip_Id    IN  VARCHAR2,
-      p_stdklei2 IN stpks_stdklei2_Main.Ty_stdklei2,
-      p_prev_stdklei2 IN stpks_stdklei2_Main.Ty_stdklei2,
-      p_wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN stpks_stdklei3_Main.Ty_stdklei3,
+      p_prev_stdklei3 IN stpks_stdklei3_Main.Ty_stdklei3,
+      p_wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
@@ -232,7 +232,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Post_Upload_Db ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Post_Upload_Db ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -247,8 +247,8 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       p_Full_Data     IN  VARCHAR2 DEFAULT 'Y',
       p_With_Lock     IN  VARCHAR2 DEFAULT 'N',
       p_QryData_Reqd IN  VARCHAR2 ,
-      p_stdklei2 IN   stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT   stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN   stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT   stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN
@@ -261,7 +261,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Custom.Fn_Pre_Query ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Custom.Fn_Pre_Query ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -276,8 +276,8 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       p_Full_Data     IN  VARCHAR2 DEFAULT 'Y',
       p_With_Lock     IN  VARCHAR2 DEFAULT 'N',
       p_QryData_Reqd IN  VARCHAR2 ,
-      p_stdklei2 IN   stpks_stdklei2_Main.ty_stdklei2,
-      p_wrk_stdklei2 IN OUT   stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3 IN   stpks_stdklei3_Main.ty_stdklei3,
+      p_wrk_stdklei3 IN OUT   stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_err_params        IN OUT VARCHAR2)
    RETURN BOOLEAN
@@ -290,7 +290,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
       RETURN TRUE;
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When others of stpks_stdklei2_Custom.Fn_Post_Query ..');
+         Debug.Pr_Debug('**','In When others of stpks_stdklei3_Custom.Fn_Post_Query ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -298,5 +298,5 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_custom AS
    END Fn_Post_Query;
 
 
-END stpks_stdklei2_custom;
+END stpks_stdklei3_custom;
 /
