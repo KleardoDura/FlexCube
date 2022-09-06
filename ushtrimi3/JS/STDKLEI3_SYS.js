@@ -28,7 +28,7 @@
 ****************************************************************************************************************************/
 
 //***** Code for criteria Search *****
-var criteriaSearch  = '';
+var criteriaSearch  = 'N';
 //----------------------------------------------------------------------------------------------------------------------
 //***** FCJ XML FOR THE SCREEN *****
 //----------------------------------------------------------------------------------------------------------------------
@@ -50,6 +50,23 @@ var strScreenName = "CVS_KLEI3";
 var qryReqd = "Y";
 var txnBranchFld = "" ;
 var originSystem = "";
+//----------------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------------
+//***** FCJ XML FOR SUMMARY SCREEN *****
+//----------------------------------------------------------------------------------------------------------------------
+var msgxml_sum=""; 
+msgxml_sum += '    <FLD>'; 
+msgxml_sum += '      <FN PARENT="" RELATION_TYPE="1" TYPE="BLK_KLEI3">AUTHSTAT~TXNSTAT~CUSTOMER_CATEGORY~CUSTOMER_TYPE</FN>'; 
+msgxml_sum += '    </FLD>'; 
+
+var detailFuncId = "STDKLEI3";
+var defaultWhereClause = "";
+var defaultOrderByClause ="";
+var multiBrnWhereClause ="";
+var g_SummaryType ="S";
+var g_SummaryBtnCount =0;
+var g_SummaryBlock ="BLK_KLEI3";
 //----------------------------------------------------------------------------------------------------------------------
 //***** CODE FOR DATABINDING *****
 //----------------------------------------------------------------------------------------------------------------------
@@ -73,7 +90,8 @@ pkFields[1] = "BLK_KLEI3__CUSTOMER_CATEGORY";
 //----------------------------------------------------------------------------------------------------------------------
 //***** CODE FOR AMENDABLE/SUBSYSTEM Fields *****
 //----------------------------------------------------------------------------------------------------------------------
-var modifyAmendArr = new Array(); 
+//***** Fields Amendable while Modification *****
+var modifyAmendArr = {"BLK_KLEI3":["BTN_KLEARDO_POPULATE","CUSTOMER_CATEGORY","CUSTOMER_TYPE"]};
 var closeAmendArr = new Array(); 
 var reopenAmendArr = new Array(); 
 var reverseAmendArr = new Array(); 
