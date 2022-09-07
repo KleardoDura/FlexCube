@@ -83,11 +83,51 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei3_custom AS
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN
-
+-------------------------------------------------------------------------------------------------------------------
       IS
+      L_COUNT NUMBER:=1;
+      L_COUNT2  NUMBER;
    BEGIN
+    Dbg('In Fn_Pre_Check_Mandatory');
+     L_COUNT2:=1;   
 
-      Dbg('In Fn_Pre_Check_Mandatory');
+           
+           IF p_ACTION_CODE='POPULATE_JOINT' then
+           Dbg(' P_ACTION_CODE is POPULATE_JOINT');
+  
+   p_stdklei3.v_sttm_klei3_details.DELETE;
+ 
+IF p_stdklei3.v_sttm_klei3.CUSTOMER_CATEGORY='AML' then
+    FOR VAR IN (SELECT * FROM kleardo_x where CUSTOMER_TYPE= p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE and CUSTOMER_CATEGORY= p_stdklei3.v_sttm_klei3.CUSTOMER_CATEGORY )
+           LOOP
+             IF VAR.FIELD_DESCRIPTION='Address1' then
+    
+            Pr_Log_Error(p_Function_Id,p_Source ,'ST-OTHR-914' , Null);
+               END IF;
+           END LOOP;
+
+END IF; 
+
+
+   
+        FOR VAR IN (SELECT * FROM kleardo_x where CUSTOMER_TYPE= p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE and CUSTOMER_CATEGORY= p_stdklei3.v_sttm_klei3.CUSTOMER_CATEGORY )
+           
+
+            LOOP 
+              p_stdklei3.v_sttm_klei3_details(L_COUNT).FIELD_DESCRIPTION := VAR.FIELD_DESCRIPTION;
+               p_stdklei3.v_sttm_klei3_details(L_COUNT).MANDATORY_VALIDATIONS := VAR.MANDATORY_VALIDATIONS;
+             
+              L_COUNT := L_COUNT + 1; 
+              END LOOP;
+
+              
+ end if;
+   -------------------------------------------------------------------------------------------------------------------
+   
+   
+    
+
+      
 
       Dbg('Returning Success From Fn_Pre_Check_Mandatory..');
       RETURN TRUE;
