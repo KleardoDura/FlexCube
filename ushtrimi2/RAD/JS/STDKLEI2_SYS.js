@@ -32,7 +32,7 @@ var criteriaSearch  = 'N';
 //----------------------------------------------------------------------------------------------------------------------
 //***** FCJ XML FOR THE SCREEN *****
 //----------------------------------------------------------------------------------------------------------------------
-var fieldNameArray = {"BLK_KLEI2":"CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH","BLK_KLEI2_DETAILS":"PRODUCT_CODE~RELATIONSHIP"};
+var fieldNameArray = {"BLK_KLEI2":"CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH","BLK_KLEI2_DETAILS":"RELATIONSHIP~PRODUCT_CODE"};
 
 var multipleEntryPageSize = {"BLK_KLEI2_DETAILS" :"15" };
 
@@ -43,7 +43,7 @@ var tabMEBlks = {"CVS_KLEI2__TAB_MAIN":"BLK_KLEI2_DETAILS"};
 var msgxml=""; 
 msgxml += '    <FLD>'; 
 msgxml += '      <FN PARENT="" RELATION_TYPE="1" TYPE="BLK_KLEI2">CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH</FN>'; 
-msgxml += '      <FN PARENT="BLK_KLEI2" RELATION_TYPE="N" TYPE="BLK_KLEI2_DETAILS">PRODUCT_CODE~RELATIONSHIP</FN>'; 
+msgxml += '      <FN PARENT="BLK_KLEI2" RELATION_TYPE="N" TYPE="BLK_KLEI2_DETAILS">RELATIONSHIP~PRODUCT_CODE</FN>'; 
 msgxml += '    </FLD>'; 
 
 var strScreenName = "CVS_KLEI2";

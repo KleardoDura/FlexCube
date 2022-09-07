@@ -1,7 +1,7 @@
-CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
+CREATE OR REPLACE PACKAGE BODY stpks_stdklei3_main AS
      /*-----------------------------------------------------------------------------------------------------
      **
-     ** File Name  : stpks_stdklei2_main.sql
+     ** File Name  : stpks_stdklei3_main.sql
      **
      ** Module     : Static Maintenance
      ** 
@@ -31,8 +31,8 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
      */
      
 
-   g_Ui_Name            VARCHAR2(50) := 'STDKLEI2';
-   g_stdklei2         stpks_stdklei2_Main.ty_stdklei2;
+   g_Ui_Name            VARCHAR2(50) := 'STDKLEI3';
+   g_stdklei3         stpks_stdklei3_Main.ty_stdklei3;
    g_Req_Key                 VARCHAR2(32767);
    g_Key_Id                  VARCHAR2(32767);
    g_Post_Upl_Stat     VARCHAR2(1);
@@ -45,13 +45,13 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       l_Msg     VARCHAR2(32767);
    BEGIN
       IF debug.pkg_debug_on <> 2 THEN
-         l_Msg := 'stpks_stdklei2_Main ==>'||p_Msg;
+         l_Msg := 'stpks_stdklei3_Main ==>'||p_Msg;
          Debug.Pr_Debug('ST' ,l_Msg);
       END IF;
    END Dbg;
 
    PROCEDURE Pr_Log_Error(p_Source VARCHAR2,p_Err_Code VARCHAR2, p_Err_Params VARCHAR2) IS
-      l_Fid    VARCHAR2(32767) := 'STDKLEI2';
+      l_Fid    VARCHAR2(32767) := 'STDKLEI3';
    BEGIN
       Cspks_Req_Utils.Pr_Log_Error(p_Source,l_Fid,p_Err_Code,p_Err_Params);
    END Pr_Log_Error;
@@ -65,7 +65,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    END  Fn_get_tanked_stat;
    PROCEDURE Pr_Skip_Handler(p_Stage in VARCHAR2) IS
    BEGIN
-      stpks_stdklei2_Custom.Pr_Skip_Handler (P_Stage);
+      stpks_stdklei3_Custom.Pr_Skip_Handler (P_Stage);
    END Pr_Skip_Handler;
    PROCEDURE Pr_Set_Skip_Sys IS
    BEGIN
@@ -104,7 +104,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Addl_Info       IN Cspks_Req_Global.Ty_Addl_Info,
-      p_stdklei2       IN   OUT stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3       IN   OUT stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -132,45 +132,46 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       WHILE (l_Node <> 'EOPL')
       LOOP
          --Dbg('Node Name  :'||l_Node);
-         IF  l_Node = 'BLK_KLEI2' THEN
-            p_stdklei2.v_sttm_klei2.CATEGORY := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.DESCRIPTION := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.RELATIONSHIP := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.MAKER_ID := Cspks_Req_Global.Fn_GetVal;
+         IF  l_Node = 'BLK_KLEI3' THEN
+            p_stdklei3.v_sttm_klei3.CUSTOMER_CATEGORY := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3.MAKER_ID := Cspks_Req_Global.Fn_GetVal;
             l_Val       := Cspks_Req_Global.Fn_GetVal;
             IF Length(l_Val) > Length(Cspks_Req_Global.g_Date_Format) THEN
-               p_stdklei2.v_sttm_klei2.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
+               p_stdklei3.v_sttm_klei3.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
             ELSE
-               p_stdklei2.v_sttm_klei2.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
+               p_stdklei3.v_sttm_klei3.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
             END IF;
-            p_stdklei2.v_sttm_klei2.CHECKER_ID := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3.CHECKER_ID := Cspks_Req_Global.Fn_GetVal;
             l_Val       := Cspks_Req_Global.Fn_GetVal;
             IF Length(l_Val) > Length(Cspks_Req_Global.g_Date_Format) THEN
-               p_stdklei2.v_sttm_klei2.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
+               p_stdklei3.v_sttm_klei3.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
             ELSE
-               p_stdklei2.v_sttm_klei2.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
+               p_stdklei3.v_sttm_klei3.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
             END IF;
-            p_stdklei2.v_sttm_klei2.MOD_NO := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.RECORD_STAT := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.AUTH_STAT := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2.ONCE_AUTH := Cspks_Req_Global.Fn_GetVal;
-         ELSIF  l_Node = 'BLK_KLEI2_DETAILS' THEN
-            l_Dsn_Rec_Cnt_2 :=  p_stdklei2.v_sttm_klei2_details.count +1 ;
-            p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).RELATIONSHIP := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).PRODUCT_CODE := Cspks_Req_Global.Fn_GetVal;
-            p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).relationship :=p_stdklei2.v_sttm_klei2.relationship;
+            p_stdklei3.v_sttm_klei3.MOD_NO := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3.RECORD_STAT := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3.AUTH_STAT := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3.ONCE_AUTH := Cspks_Req_Global.Fn_GetVal;
+         ELSIF  l_Node = 'BLK_KLEI3_DETAILS' THEN
+            l_Dsn_Rec_Cnt_2 :=  p_stdklei3.v_sttm_klei3_details.count +1 ;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).CUSTOMER_CATEGORY := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).CUSTOMER_TYPE := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).FIELD_DESCRIPTION := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).MANDATORY_VALIDATIONS := Cspks_Req_Global.Fn_GetVal;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).customer_category :=p_stdklei3.v_sttm_klei3.customer_category;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).customer_type :=p_stdklei3.v_sttm_klei3.customer_type;
          END IF;
          l_Node := Cspks_Req_Global.Fn_GetNode;
       END LOOP;
 
-      p_stdklei2.Addl_Info := p_Addl_Info;
+      p_stdklei3.Addl_Info := p_Addl_Info;
       Dbg('Returning Success From Fn_Sys_Build_Fc_Type.. ');
       RETURN TRUE;
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Sys_Build_Fc_Type ');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Sys_Build_Fc_Type ');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -181,7 +182,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Addl_Info       IN Cspks_Req_Global.Ty_Addl_Info,
-      p_stdklei2       IN   OUT stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3       IN   OUT stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -210,79 +211,80 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       WHILE (l_Node <> 'EOPL')
       LOOP
          --Dbg('Node Name  :'||l_Node);
-         IF  l_Node IN ( 'BLK_KLEI2','Klei2-Full','Klei2-IO') THEN
+         IF  l_Node IN ( 'BLK_KLEI3','Klei3-Full','Klei3-IO') THEN
             l_Key       := Cspks_Req_Global.Fn_GetTag;
             l_Val       := Cspks_Req_Global.Fn_GetVal;
             WHILE (l_Key <> 'EOPL')
             LOOP
                --dbg('Key/Value   :'||l_Key ||':'||l_Val);
-               IF l_Key = 'CATEGORY' THEN
-                  p_stdklei2.v_sttm_klei2.CATEGORY := l_Val;
-               ELSIF l_Key = 'DESCRIPTION' THEN
-                  p_stdklei2.v_sttm_klei2.DESCRIPTION := l_Val;
-               ELSIF l_Key = 'PRODUCT_RESTRICTION' THEN
-                  p_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION := l_Val;
-               ELSIF l_Key = 'RELATIONSHIP' THEN
-                  p_stdklei2.v_sttm_klei2.RELATIONSHIP := l_Val;
+               IF l_Key = 'CUSTOMER_CATEGORY' THEN
+                  p_stdklei3.v_sttm_klei3.CUSTOMER_CATEGORY := l_Val;
+               ELSIF l_Key = 'CUSTOMER_TYPE' THEN
+                  p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE := l_Val;
                ELSIF l_Key = 'MAKER' THEN
-                  p_stdklei2.v_sttm_klei2.MAKER_ID := l_Val;
+                  p_stdklei3.v_sttm_klei3.MAKER_ID := l_Val;
                ELSIF l_Key = 'MAKERSTAMP' THEN
                   BEGIN
                      IF Length(l_Val) > Length(Cspks_Req_Global.g_Date_Format) THEN
-                        p_stdklei2.v_sttm_klei2.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
+                        p_stdklei3.v_sttm_klei3.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
                      ELSE
-                        p_stdklei2.v_sttm_klei2.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
+                        p_stdklei3.v_sttm_klei3.MAKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
                      END IF;
                   EXCEPTION
                      WHEN OTHERS THEN
                         RAISE Invalid_Date;
                   END;
                ELSIF l_Key = 'CHECKER' THEN
-                  p_stdklei2.v_sttm_klei2.CHECKER_ID := l_Val;
+                  p_stdklei3.v_sttm_klei3.CHECKER_ID := l_Val;
                ELSIF l_Key = 'CHECKERSTAMP' THEN
                   BEGIN
                      IF Length(l_Val) > Length(Cspks_Req_Global.g_Date_Format) THEN
-                        p_stdklei2.v_sttm_klei2.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
+                        p_stdklei3.v_sttm_klei3.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Time_Format);
                      ELSE
-                        p_stdklei2.v_sttm_klei2.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
+                        p_stdklei3.v_sttm_klei3.CHECKER_DT_STAMP := TO_DATE(l_val,Cspks_Req_Global.g_Date_Format);
                      END IF;
                   EXCEPTION
                      WHEN OTHERS THEN
                         RAISE Invalid_Date;
                   END;
                ELSIF l_Key = 'MODNO' THEN
-                  p_stdklei2.v_sttm_klei2.MOD_NO := l_Val;
+                  p_stdklei3.v_sttm_klei3.MOD_NO := l_Val;
                ELSIF l_Key = 'TXNSTAT' THEN
-                  p_stdklei2.v_sttm_klei2.RECORD_STAT := l_Val;
+                  p_stdklei3.v_sttm_klei3.RECORD_STAT := l_Val;
                ELSIF l_Key = 'AUTHSTAT' THEN
-                  p_stdklei2.v_sttm_klei2.AUTH_STAT := l_Val;
+                  p_stdklei3.v_sttm_klei3.AUTH_STAT := l_Val;
                ELSIF l_Key = 'ONCEAUTH' THEN
-                  p_stdklei2.v_sttm_klei2.ONCE_AUTH := l_Val;
+                  p_stdklei3.v_sttm_klei3.ONCE_AUTH := l_Val;
                END IF;
                l_Key       := Cspks_Req_Global.Fn_GetTag;
                l_Val       := Cspks_Req_Global.Fn_GetVal;
             END LOOP;
-         ELSIF  l_Node IN ( 'BLK_KLEI2_DETAILS','Klei2-Details') THEN
-            l_Dsn_Rec_Cnt_2 :=  p_stdklei2.v_sttm_klei2_details.count +1 ;
+         ELSIF  l_Node IN ( 'BLK_KLEI3_DETAILS','Klei3-Details') THEN
+            l_Dsn_Rec_Cnt_2 :=  p_stdklei3.v_sttm_klei3_details.count +1 ;
             l_Key       := Cspks_Req_Global.Fn_GetTag;
             l_Val       := Cspks_Req_Global.Fn_GetVal;
             WHILE (l_Key <> 'EOPL')
             LOOP
                --dbg('Key/Value   :'||l_Key ||':'||l_Val);
-               IF l_Key = 'RELATIONSHIP' THEN
-                  p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).RELATIONSHIP := l_Val;
-               ELSIF l_Key = 'PRODUCT_CODE' THEN
-                  p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).PRODUCT_CODE := l_Val;
+               IF l_Key = 'CUSTOMER_CATEGORY' THEN
+                  p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).CUSTOMER_CATEGORY := l_Val;
+               ELSIF l_Key = 'CUSTOMER_TYPE' THEN
+                  p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).CUSTOMER_TYPE := l_Val;
+               ELSIF l_Key = 'FIELD_DESCRIPTION' THEN
+                  p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).FIELD_DESCRIPTION := l_Val;
+               ELSIF l_Key = 'MANDATORY_VALIDATIONS' THEN
+                  p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).MANDATORY_VALIDATIONS := l_Val;
                END IF;
                l_Key       := Cspks_Req_Global.Fn_GetTag;
                l_Val       := Cspks_Req_Global.Fn_GetVal;
             END LOOP;
-            p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).relationship :=p_stdklei2.v_sttm_klei2.relationship;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).customer_category :=p_stdklei3.v_sttm_klei3.customer_category;
+            p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).customer_type :=p_stdklei3.v_sttm_klei3.customer_type;
          END IF;
          l_Node := Cspks_Req_Global.Fn_GetNode;
       END LOOP;
 
-      p_stdklei2.Addl_Info := p_Addl_Info;
+      p_stdklei3.Addl_Info := p_Addl_Info;
       Dbg('Returning Success From Fn_Sys_Build_Fc_Type.. ');
       RETURN TRUE;
 
@@ -291,7 +293,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
          Pr_Log_Error(p_Source,'ST-OTHR-003',l_Key||'~'||Cspks_Req_Global.g_Date_Format) ;
          RETURN FALSE;
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Sys_Build_Fc_Type ');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Sys_Build_Fc_Type ');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -301,7 +303,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                               p_Source_Operation  IN     VARCHAR2,
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
-      p_stdklei2          IN stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3          IN stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code        IN OUT VARCHAR2,
       p_Err_Params      IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -327,43 +329,43 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       l_1_Lvl_Counter := 0;
       l_0_Lvl_Counter   := l_0_Lvl_Counter +1;
       l_Level_Format      := l_0_Lvl_Counter;
-      Cspks_Req_Global.Pr_Write('P','BLK_KLEI2',l_Level_Format);
-      Cspks_Req_Global.Pr_Write('V','CATEGORY',p_stdklei2.v_sttm_klei2.category);
-      Cspks_Req_Global.Pr_Write('V','DESCRIPTION',p_stdklei2.v_sttm_klei2.description);
-      Cspks_Req_Global.Pr_Write('V','PRODUCT_RESTRICTION',p_stdklei2.v_sttm_klei2.product_restriction);
-      Cspks_Req_Global.Pr_Write('V','RELATIONSHIP',p_stdklei2.v_sttm_klei2.relationship);
-      Cspks_Req_Global.Pr_Write('V','MAKER',p_stdklei2.v_sttm_klei2.maker_id);
-      IF trunc(p_stdklei2.v_sttm_klei2.maker_dt_stamp) <>
-            p_stdklei2.v_sttm_klei2.maker_dt_stamp THEN
-         l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
+      Cspks_Req_Global.Pr_Write('P','BLK_KLEI3',l_Level_Format);
+      Cspks_Req_Global.Pr_Write('V','CUSTOMER_CATEGORY',p_stdklei3.v_sttm_klei3.customer_category);
+      Cspks_Req_Global.Pr_Write('V','CUSTOMER_TYPE',p_stdklei3.v_sttm_klei3.customer_type);
+      Cspks_Req_Global.Pr_Write('V','MAKER',p_stdklei3.v_sttm_klei3.maker_id);
+      IF trunc(p_stdklei3.v_sttm_klei3.maker_dt_stamp) <>
+            p_stdklei3.v_sttm_klei3.maker_dt_stamp THEN
+         l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
       ELSE
-         l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
+         l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
       END IF;
       Cspks_Req_Global.Pr_Write('V','MAKERSTAMP',l_Date_Val);
-      Cspks_Req_Global.Pr_Write('V','CHECKER',p_stdklei2.v_sttm_klei2.checker_id);
-      IF trunc(p_stdklei2.v_sttm_klei2.checker_dt_stamp) <>
-            p_stdklei2.v_sttm_klei2.checker_dt_stamp THEN
-         l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
+      Cspks_Req_Global.Pr_Write('V','CHECKER',p_stdklei3.v_sttm_klei3.checker_id);
+      IF trunc(p_stdklei3.v_sttm_klei3.checker_dt_stamp) <>
+            p_stdklei3.v_sttm_klei3.checker_dt_stamp THEN
+         l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
       ELSE
-         l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
+         l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
       END IF;
       Cspks_Req_Global.Pr_Write('V','CHECKERSTAMP',l_Date_Val);
-      Cspks_Req_Global.Pr_Write('V','MODNO',p_stdklei2.v_sttm_klei2.mod_no);
-      Cspks_Req_Global.Pr_Write('V','TXNSTAT',p_stdklei2.v_sttm_klei2.record_stat);
-      Cspks_Req_Global.Pr_Write('V','AUTHSTAT',p_stdklei2.v_sttm_klei2.auth_stat);
-      Cspks_Req_Global.Pr_Write('V','ONCEAUTH',p_stdklei2.v_sttm_klei2.once_auth);
+      Cspks_Req_Global.Pr_Write('V','MODNO',p_stdklei3.v_sttm_klei3.mod_no);
+      Cspks_Req_Global.Pr_Write('V','TXNSTAT',p_stdklei3.v_sttm_klei3.record_stat);
+      Cspks_Req_Global.Pr_Write('V','AUTHSTAT',p_stdklei3.v_sttm_klei3.auth_stat);
+      Cspks_Req_Global.Pr_Write('V','ONCEAUTH',p_stdklei3.v_sttm_klei3.once_auth);
 
-      --Dbg('Building Childs Of :BLK_KLEI2..');
+      --Dbg('Building Childs Of :BLK_KLEI3..');
       l_Dsn_Rec_Cnt_2 := 0;
-      IF p_stdklei2.v_sttm_klei2_details.COUNT > 0 THEN
-         FOR i_2 IN  1..p_stdklei2.v_sttm_klei2_details.COUNT LOOP
+      IF p_stdklei3.v_sttm_klei3_details.COUNT > 0 THEN
+         FOR i_2 IN  1..p_stdklei3.v_sttm_klei3_details.COUNT LOOP
             l_Dsn_Rec_Cnt_2 := i_2;
             l_Master_Childs  :=  l_Master_Childs +1;
             l_1_Lvl_Counter   := l_1_Lvl_Counter +1;
             l_Level_Format      := l_0_Lvl_Counter||'.'||l_1_Lvl_Counter;
-            Cspks_Req_Global.Pr_Write('P','BLK_KLEI2_DETAILS',l_Level_Format);
-            Cspks_Req_Global.Pr_Write('V','RELATIONSHIP',p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).relationship);
-            Cspks_Req_Global.Pr_Write('V','PRODUCT_CODE',p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).product_code);
+            Cspks_Req_Global.Pr_Write('P','BLK_KLEI3_DETAILS',l_Level_Format);
+            Cspks_Req_Global.Pr_Write('V','CUSTOMER_CATEGORY',p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).customer_category);
+            Cspks_Req_Global.Pr_Write('V','CUSTOMER_TYPE',p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).customer_type);
+            Cspks_Req_Global.Pr_Write('V','FIELD_DESCRIPTION',p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).field_description);
+            Cspks_Req_Global.Pr_Write('V','MANDATORY_VALIDATIONS',p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).mandatory_validations);
          END LOOP;
       END IF;
       Dbg('Returning Success From Fn_Sys_Build_Fc_Ts..');
@@ -381,7 +383,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Exchange_Pattern IN       VARCHAR2,
-      p_stdklei2          IN stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3          IN stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code        IN OUT VARCHAR2,
       p_Err_Params      IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -408,56 +410,55 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
          Dbg('Building Full Screen Reply..');
 
          --Dbg('Building Childs Of :..');
-         IF (  p_stdklei2.v_sttm_klei2.relationship IS NOT NULL 
+         IF (  p_stdklei3.v_sttm_klei3.customer_type IS NOT NULL 
+         AND  p_stdklei3.v_sttm_klei3.customer_category IS NOT NULL 
           )
           THEN
             l_1_Lvl_Counter := 0;
             l_0_Lvl_Counter   := l_0_Lvl_Counter +1;
             l_Level_Format      := l_0_Lvl_Counter;
-            Cspks_Req_Global.Pr_Write('P','Klei2-Full',l_Level_Format);
-            Cspks_Req_Global.Pr_Write('V','CATEGORY',p_stdklei2.v_sttm_klei2.category);
-            Cspks_Req_Global.Pr_Write('V','DESCRIPTION',p_stdklei2.v_sttm_klei2.description);
-            Cspks_Req_Global.Pr_Write('V','PRODUCT_RESTRICTION',p_stdklei2.v_sttm_klei2.product_restriction);
-            Cspks_Req_Global.Pr_Write('V','RELATIONSHIP',p_stdklei2.v_sttm_klei2.relationship);
-            Cspks_Req_Global.Pr_Write('V','MAKER',p_stdklei2.v_sttm_klei2.maker_id);
-            IF trunc(p_stdklei2.v_sttm_klei2.maker_dt_stamp) <>
-                  p_stdklei2.v_sttm_klei2.maker_dt_stamp THEN
-               l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
+            Cspks_Req_Global.Pr_Write('P','Klei3-Full',l_Level_Format);
+            Cspks_Req_Global.Pr_Write('V','CUSTOMER_CATEGORY',p_stdklei3.v_sttm_klei3.customer_category);
+            Cspks_Req_Global.Pr_Write('V','CUSTOMER_TYPE',p_stdklei3.v_sttm_klei3.customer_type);
+            Cspks_Req_Global.Pr_Write('V','MAKER',p_stdklei3.v_sttm_klei3.maker_id);
+            IF trunc(p_stdklei3.v_sttm_klei3.maker_dt_stamp) <>
+                  p_stdklei3.v_sttm_klei3.maker_dt_stamp THEN
+               l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
             ELSE
-               l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
+               l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.maker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
             END IF;
             Cspks_Req_Global.Pr_Write('V','MAKERSTAMP',l_Date_Val);
-            Cspks_Req_Global.Pr_Write('V','CHECKER',p_stdklei2.v_sttm_klei2.checker_id);
-            IF trunc(p_stdklei2.v_sttm_klei2.checker_dt_stamp) <>
-                  p_stdklei2.v_sttm_klei2.checker_dt_stamp THEN
-               l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
+            Cspks_Req_Global.Pr_Write('V','CHECKER',p_stdklei3.v_sttm_klei3.checker_id);
+            IF trunc(p_stdklei3.v_sttm_klei3.checker_dt_stamp) <>
+                  p_stdklei3.v_sttm_klei3.checker_dt_stamp THEN
+               l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Time_Format);
             ELSE
-               l_Date_Val :=  TO_CHAR( p_stdklei2.v_sttm_klei2.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
+               l_Date_Val :=  TO_CHAR( p_stdklei3.v_sttm_klei3.checker_dt_stamp,Cspks_Req_Global.g_Ws_Date_Format);
             END IF;
             Cspks_Req_Global.Pr_Write('V','CHECKERSTAMP',l_Date_Val);
-            Cspks_Req_Global.Pr_Write('V','MODNO',p_stdklei2.v_sttm_klei2.mod_no);
-            Cspks_Req_Global.Pr_Write('V','TXNSTAT',p_stdklei2.v_sttm_klei2.record_stat);
-            Cspks_Req_Global.Pr_Write('V','AUTHSTAT',p_stdklei2.v_sttm_klei2.auth_stat);
+            Cspks_Req_Global.Pr_Write('V','MODNO',p_stdklei3.v_sttm_klei3.mod_no);
+            Cspks_Req_Global.Pr_Write('V','TXNSTAT',p_stdklei3.v_sttm_klei3.record_stat);
+            Cspks_Req_Global.Pr_Write('V','AUTHSTAT',p_stdklei3.v_sttm_klei3.auth_stat);
 
-            --Dbg('Building Childs Of :BLK_KLEI2..');
+            --Dbg('Building Childs Of :BLK_KLEI3..');
             l_Dsn_Rec_Cnt_2 := 0;
-            IF p_stdklei2.v_sttm_klei2_details.COUNT > 0 THEN
-               FOR i_2 IN  1..p_stdklei2.v_sttm_klei2_details.COUNT LOOP
+            IF p_stdklei3.v_sttm_klei3_details.COUNT > 0 THEN
+               FOR i_2 IN  1..p_stdklei3.v_sttm_klei3_details.COUNT LOOP
                   l_Dsn_Rec_Cnt_2 := i_2;
                   l_Master_Childs  :=  l_Master_Childs +1;
                   l_1_Lvl_Counter   := l_1_Lvl_Counter +1;
                   l_Level_Format      := l_0_Lvl_Counter||'.'||l_1_Lvl_Counter;
-                  Cspks_Req_Global.Pr_Write('P','Klei2-Details',l_Level_Format);
-                  Cspks_Req_Global.Pr_Write('V','RELATIONSHIP',p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).relationship);
-                  Cspks_Req_Global.Pr_Write('V','PRODUCT_CODE',p_stdklei2.v_sttm_klei2_details(l_Dsn_Rec_Cnt_2).product_code);
+                  Cspks_Req_Global.Pr_Write('P','Klei3-Details',l_Level_Format);
+                  Cspks_Req_Global.Pr_Write('V','FIELD_DESCRIPTION',p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).field_description);
+                  Cspks_Req_Global.Pr_Write('V','MANDATORY_VALIDATIONS',p_stdklei3.v_sttm_klei3_details(l_Dsn_Rec_Cnt_2).mandatory_validations);
                END LOOP;
             END IF;
          END IF;
       ELSE
          Dbg('Building Primary Key Reply..');
-         Cspks_Req_Global.pr_Write('P','Klei2-PK','1');
-         l_Key_Cols := 'RELATIONSHIP~';
-         l_Key_Vals := p_stdklei2.v_sttm_klei2.relationship||'~';
+         Cspks_Req_Global.pr_Write('P','Klei3-PK','1');
+         l_Key_Cols := 'CUSTOMER_TYPE~'||'CUSTOMER_CATEGORY~';
+         l_Key_Vals := p_stdklei3.v_sttm_klei3.customer_type||'~'||p_stdklei3.v_sttm_klei3.customer_category||'~';
          Cspks_Req_Global.pr_Write('V',l_Key_Cols,l_Key_Vals);
       END IF;
       Dbg('Returning Success From Fn_Sys_Build_Ws_Ts..');
@@ -472,7 +473,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    END Fn_Sys_Build_Ws_Ts;
    FUNCTION Fn_Sys_Check_Mandatory (p_Source    IN  VARCHAR2,
       p_Pk_Or_Full     IN  VARCHAR2 DEFAULT 'FULL',
-      p_stdklei2 IN  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
    RETURN BOOLEAN IS
@@ -488,9 +489,16 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
 
       Dbg('In Fn_Sys_Check_Mandatory..');
 
-      l_Fld := 'STTM_KLEI2.RELATIONSHIP';
-      IF p_stdklei2.v_sttm_klei2.relationship IS Null THEN
-         Dbg('Field relationship is Null..');
+      l_Fld := 'STTM_KLEI3.CUSTOMER_TYPE';
+      IF p_stdklei3.v_sttm_klei3.customer_type IS Null THEN
+         Dbg('Field customer_type is Null..');
+         p_Err_Code    := 'ST-MAND-001';
+         p_Err_Params := '@'||l_Fld;
+         RETURN FALSE;
+      END IF;
+      l_Fld := 'STTM_KLEI3.CUSTOMER_CATEGORY';
+      IF p_stdklei3.v_sttm_klei3.customer_category IS Null THEN
+         Dbg('Field customer_category is Null..');
          p_Err_Code    := 'ST-MAND-001';
          p_Err_Params := '@'||l_Fld;
          RETURN FALSE;
@@ -499,20 +507,15 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       IF p_Pk_Or_Full = 'FULL'  THEN
          Dbg('Full Mandatory Checks..');
 
-         l_Blk := 'STTM_KLEI2';
-         l_Fld := 'STTM_KLEI2.CATEGORY';
-         IF p_stdklei2.v_sttm_klei2.category IS Null THEN
-            Dbg('Mandatory Key Column category Cannot Be Null');
-            Pr_Log_Error(p_Source,'ST-MAND-004','@'||l_Fld );
-         END IF;
+         l_Blk := 'STTM_KLEI3';
 
-         l_Blk := 'STTM_KLEI2_DETAILS';
-         l_Count := p_stdklei2.v_sttm_klei2_details.COUNT;
+         l_Blk := 'STTM_KLEI3_DETAILS';
+         l_Count := p_stdklei3.v_sttm_klei3_details.COUNT;
          IF l_Count > 0 THEN
-            FOR l_index IN 1 .. p_stdklei2.v_sttm_klei2_details.COUNT LOOP
-               l_Fld := 'STTM_KLEI2_DETAILS.PRODUCT_CODE';
-               IF p_stdklei2.v_sttm_klei2_details(l_Index).product_code IS Null THEN
-                  Dbg('Primary Key Column product_code Cannot Be Null');
+            FOR l_index IN 1 .. p_stdklei3.v_sttm_klei3_details.COUNT LOOP
+               l_Fld := 'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION';
+               IF p_stdklei3.v_sttm_klei3_details(l_Index).field_description IS Null THEN
+                  Dbg('Primary Key Column field_description Cannot Be Null');
                   l_Key := Null;
                   Pr_Log_Error(p_Source,'ST-MAND-003','@'||l_Fld||'~@'||l_Blk||'~'||l_index );
                END IF;
@@ -532,7 +535,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
          RETURN FALSE;
    END Fn_Sys_Check_Mandatory;
    FUNCTION Fn_Sys_Basic_Vals        (p_Source            IN VARCHAR2,
-      p_stdklei2     IN  stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3     IN  stpks_stdklei3_Main.ty_stdklei3,
       p_Err_code          IN OUT VARCHAR2,
       p_Err_params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -546,24 +549,38 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    BEGIN
 
       Dbg('In Fn_Sys_Basic_Vals..');
-      IF p_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION IS NOT NULL THEN
-         IF p_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION NOT IN ('Allowed','Disallowed') THEN
-            dbg('Invalid Value For The Field  :PRODUCT_RESTRICTION:'||p_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION);
-            Pr_Log_Error(p_Source,'ST-VALS-011',p_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION||'~@STTM_KLEI2.PRODUCT_RESTRICTION~@STTM_KLEI2') ;
+      IF p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE IS NOT NULL THEN
+         IF p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE NOT IN ('Individual','Group') THEN
+            dbg('Invalid Value For The Field  :CUSTOMER_TYPE:'||p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE);
+            Pr_Log_Error(p_Source,'ST-VALS-011',p_stdklei3.v_sttm_klei3.CUSTOMER_TYPE||'~@STTM_KLEI3.CUSTOMER_TYPE~@STTM_KLEI3') ;
          END IF;
       END IF;
-      Dbg('Duplicate Records Check For :v_sttm_klei2_details..');
-      l_Count      := p_stdklei2.v_sttm_klei2_details.COUNT;
+      l_Count      := p_stdklei3.v_sttm_klei3_details.COUNT;
+      IF l_Count > 0 THEN
+         FOR l_index  IN 1 .. l_Count LOOP
+            l_Key := NULL;
+            IF p_stdklei3.v_sttm_klei3_details(l_index).MANDATORY_VALIDATIONS IS NOT NULL THEN
+               IF p_stdklei3.v_sttm_klei3_details(l_index).MANDATORY_VALIDATIONS NOT IN ('OPTIONAL') THEN
+                  dbg('Invalid Value For The Field  :MANDATORY_VALIDATIONS:'||p_stdklei3.v_sttm_klei3_details(l_index).MANDATORY_VALIDATIONS);
+                  l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                  p_stdklei3.v_sttm_klei3_details(l_index).field_description;
+                  Pr_Log_Error(p_Source,'ST-VALS-013',p_stdklei3.v_sttm_klei3_details(l_index).MANDATORY_VALIDATIONS||'~@STTM_KLEI3_DETAILS.MANDATORY_VALIDATIONS'||'~'||l_Key||'~@STTM_KLEI3_DETAILS') ;
+               END IF;
+            END IF;
+         END LOOP;
+      END IF;
+      Dbg('Duplicate Records Check For :v_sttm_klei3_details..');
+      l_Count      := p_stdklei3.v_sttm_klei3_details.COUNT;
       IF l_Count > 0 THEN
          FOR l_index  IN 1 .. l_count LOOP
             l_key := NULL;
             IF l_index < l_Count THEN
                FOR l_index1 IN l_index+1 .. l_Count LOOP
-                  IF (NVL(p_stdklei2.v_sttm_klei2_details(l_index).product_code,'@')=  NVL(p_stdklei2.v_sttm_klei2_details(l_index1).product_code,'@')) THEN
+                  IF (NVL(p_stdklei3.v_sttm_klei3_details(l_index).field_description,'@')=  NVL(p_stdklei3.v_sttm_klei3_details(l_index1).field_description,'@')) THEN
                      Dbg('Duplicare Record Found for :'||l_Key);
-                     l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                     p_stdklei2.v_sttm_klei2_details(l_index).product_code;
-                     Pr_Log_Error(p_Source,'ST-VALS-009','@STTM_KLEI2_DETAILS~'||l_Key);
+                     l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                     p_stdklei3.v_sttm_klei3_details(l_index).field_description;
+                     Pr_Log_Error(p_Source,'ST-VALS-009','@STTM_KLEI3_DETAILS~'||l_Key);
                   END IF;
                END LOOP;
             END IF;
@@ -581,7 +598,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    END Fn_Sys_Basic_Vals;
 
    FUNCTION Fn_Sys_Default_Vals        (p_Source            IN VARCHAR2,
-      p_Wrk_stdklei2     IN  OUT stpks_stdklei2_Main.ty_stdklei2,
+      p_Wrk_stdklei3     IN  OUT stpks_stdklei3_Main.ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -603,9 +620,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
 
    FUNCTION Fn_Sys_Merge_Amendables        (p_Source            IN VARCHAR2,
       p_Source_Operation  IN     VARCHAR2,
-      p_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2 IN stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3 IN stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -628,7 +645,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       l_Base_Data_From_Fc  VARCHAR2(1):= 'Y';
       l_Amendable_Nodes Cspks_Req_Global.Ty_Amend_Nodes;
       l_Amendable_Fields Cspks_Req_Global.Ty_Amend_Fields;
-      N_v_sttm_klei2_details       stpks_stdklei2_Main.Ty_Tb_v_sttm_klei2_details;
+      N_v_sttm_klei3_details       stpks_stdklei3_Main.Ty_Tb_v_sttm_klei3_details;
 
       FUNCTION Fn_Amendable(p_Item IN VARCHAR2) RETURN BOOLEAN IS
       BEGIN
@@ -653,46 +670,10 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
          Pr_Log_Error(p_Source,p_Err_Code,p_Err_Params);
       END IF;
 
-      l_Blk := 'STTM_KLEI2';
+      l_Blk := 'STTM_KLEI3';
       l_Rec_Modified := FALSE;
       l_Modified_Flds  := NULL;
 
-      l_fld := 'STTM_KLEI2.CATEGORY';
-      IF Fn_Amendable('STTM_KLEI2.CATEGORY') THEN
-         p_Wrk_stdklei2.v_sttm_klei2.category := p_stdklei2.v_sttm_klei2.category;
-      ELSE
-         IF p_stdklei2.v_sttm_klei2.category IS NOT NULL THEN
-            IF NVL(p_Wrk_stdklei2.v_sttm_klei2.category,'@') <>
-               NVL(p_stdklei2.v_sttm_klei2.category,'@')  THEN
-               l_Modified_Flds := l_Modified_Flds ||'~'||l_Fld;
-               l_Rec_Modified := TRUE;
-            END IF;
-         END IF;
-      END IF;
-      l_fld := 'STTM_KLEI2.DESCRIPTION';
-      IF Fn_Amendable('STTM_KLEI2.DESCRIPTION') THEN
-         p_Wrk_stdklei2.v_sttm_klei2.description := p_stdklei2.v_sttm_klei2.description;
-      ELSE
-         IF p_stdklei2.v_sttm_klei2.description IS NOT NULL THEN
-            IF NVL(p_Wrk_stdklei2.v_sttm_klei2.description,'@') <>
-               NVL(p_stdklei2.v_sttm_klei2.description,'@')  THEN
-               l_Modified_Flds := l_Modified_Flds ||'~'||l_Fld;
-               l_Rec_Modified := TRUE;
-            END IF;
-         END IF;
-      END IF;
-      l_fld := 'STTM_KLEI2.PRODUCT_RESTRICTION';
-      IF Fn_Amendable('STTM_KLEI2.PRODUCT_RESTRICTION') THEN
-         p_Wrk_stdklei2.v_sttm_klei2.product_restriction := p_stdklei2.v_sttm_klei2.product_restriction;
-      ELSE
-         IF p_stdklei2.v_sttm_klei2.product_restriction IS NOT NULL THEN
-            IF NVL(p_Wrk_stdklei2.v_sttm_klei2.product_restriction,'@') <>
-               NVL(p_stdklei2.v_sttm_klei2.product_restriction,'@')  THEN
-               l_Modified_Flds := l_Modified_Flds ||'~'||l_Fld;
-               l_Rec_Modified := TRUE;
-            END IF;
-         END IF;
-      END IF;
 
       l_Modified_Flds := LTRIM(l_Modified_Flds,'~');
       IF  l_Rec_Modified THEN
@@ -706,9 +687,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
             END LOOP;
          END IF;
       END IF;
-      l_Blk := 'STTM_KLEI2_DETAILS';
-      l_Count      := p_stdklei2.v_sttm_klei2_details.COUNT;
-      l_Wrk_Count  := p_Wrk_stdklei2.v_sttm_klei2_details.COUNT;
+      l_Blk := 'STTM_KLEI3_DETAILS';
+      l_Count      := p_stdklei3.v_sttm_klei3_details.COUNT;
+      l_Wrk_Count  := p_Wrk_stdklei3.v_sttm_klei3_details.COUNT;
       IF l_Count > 0 THEN
          FOR l_index IN 1..l_Count  LOOP
             l_Rec_Found := FALSE;
@@ -716,16 +697,40 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
             l_Modified_Flds := NULL;
             IF l_Wrk_Count > 0 THEN
                FOR l_index1 IN 1..l_Wrk_Count  LOOP
-                  IF (NVL(p_stdklei2.v_sttm_klei2_details(l_index).product_code,'@')=  NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_index1).product_code,'@')) THEN
+                  IF (NVL(p_stdklei3.v_sttm_klei3_details(l_index).field_description,'@')=  NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).field_description,'@')) THEN
                      Dbg('Record Found..');
                      l_Rec_Found := TRUE;
-                     l_fld := 'STTM_KLEI2_DETAILS.RELATIONSHIP';
-                     IF Fn_Amendable('STTM_KLEI2_DETAILS.RELATIONSHIP') THEN
-                        p_Wrk_stdklei2.v_sttm_klei2_details(l_index1).relationship := p_stdklei2.v_sttm_klei2_details(l_index).relationship;
+                     l_fld := 'STTM_KLEI3_DETAILS.CUSTOMER_CATEGORY';
+                     IF Fn_Amendable('STTM_KLEI3_DETAILS.CUSTOMER_CATEGORY') THEN
+                        p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).customer_category := p_stdklei3.v_sttm_klei3_details(l_index).customer_category;
                      ELSE
-                        IF p_stdklei2.v_sttm_klei2_details(l_index).relationship IS NOT NULL THEN
-                           IF NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_index1).relationship,'@') <>
-                              NVL(p_stdklei2.v_sttm_klei2_details(l_index).relationship,'@')  THEN
+                        IF p_stdklei3.v_sttm_klei3_details(l_index).customer_category IS NOT NULL THEN
+                           IF NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).customer_category,'@') <>
+                              NVL(p_stdklei3.v_sttm_klei3_details(l_index).customer_category,'@')  THEN
+                              l_Modified_flds := l_Modified_Flds ||'~'||l_Fld;
+                              l_Rec_Modified  := TRUE;
+                           END IF;
+                        END IF;
+                     END IF;
+                     l_fld := 'STTM_KLEI3_DETAILS.CUSTOMER_TYPE';
+                     IF Fn_Amendable('STTM_KLEI3_DETAILS.CUSTOMER_TYPE') THEN
+                        p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).customer_type := p_stdklei3.v_sttm_klei3_details(l_index).customer_type;
+                     ELSE
+                        IF p_stdklei3.v_sttm_klei3_details(l_index).customer_type IS NOT NULL THEN
+                           IF NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).customer_type,'@') <>
+                              NVL(p_stdklei3.v_sttm_klei3_details(l_index).customer_type,'@')  THEN
+                              l_Modified_flds := l_Modified_Flds ||'~'||l_Fld;
+                              l_Rec_Modified  := TRUE;
+                           END IF;
+                        END IF;
+                     END IF;
+                     l_fld := 'STTM_KLEI3_DETAILS.MANDATORY_VALIDATIONS';
+                     IF Fn_Amendable('STTM_KLEI3_DETAILS.MANDATORY_VALIDATIONS') THEN
+                        p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).mandatory_validations := p_stdklei3.v_sttm_klei3_details(l_index).mandatory_validations;
+                     ELSE
+                        IF p_stdklei3.v_sttm_klei3_details(l_index).mandatory_validations IS NOT NULL THEN
+                           IF NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).mandatory_validations,'@') <>
+                              NVL(p_stdklei3.v_sttm_klei3_details(l_index).mandatory_validations,'@')  THEN
                               l_Modified_flds := l_Modified_Flds ||'~'||l_Fld;
                               l_Rec_Modified  := TRUE;
                            END IF;
@@ -735,8 +740,8 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                      l_Modified_Flds := LTRIM(l_Modified_Flds,'~');
                      IF  l_Rec_modified THEN
                         IF l_Modified_Flds IS NOT NULL THEN
-                           l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                           p_stdklei2.v_sttm_klei2_details(l_index).product_code;
+                           l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                           p_stdklei3.v_sttm_klei3_details(l_index).field_description;
                            i :=  1;
                            l_Mod_Fld := Cspkes_Misc.Fn_GetParam(l_Modified_Flds,i,'~');
                            WHILE l_mod_fld <> 'EOPL' LOOP
@@ -750,35 +755,35 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                END LOOP;
             END IF;
             IF NOT l_Rec_Found THEN
-               p_Wrk_stdklei2.v_sttm_klei2_details(p_Wrk_stdklei2.v_sttm_klei2_details.COUNT +1 ) :=  p_stdklei2.v_sttm_klei2_details(l_index);
-               IF l_Amendable_Nodes.EXISTS('STTM_KLEI2_DETAILS') THEN
-                  IF l_Amendable_Nodes('STTM_KLEI2_DETAILS').New_Allowed = 'N' THEN
+               p_Wrk_stdklei3.v_sttm_klei3_details(p_Wrk_stdklei3.v_sttm_klei3_details.COUNT +1 ) :=  p_stdklei3.v_sttm_klei3_details(l_index);
+               IF l_Amendable_Nodes.EXISTS('STTM_KLEI3_DETAILS') THEN
+                  IF l_Amendable_Nodes('STTM_KLEI3_DETAILS').New_Allowed = 'N' THEN
                      Dbg('New Record Cannot Be Added..');
-                     l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                     p_stdklei2.v_sttm_klei2_details(l_index).product_code;
+                     l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                     p_stdklei3.v_sttm_klei3_details(l_index).field_description;
                      Pr_Log_Error(p_source,'ST-AMND-004',l_key||'~@'||l_blk);
                   END IF;
                ELSE
                   Dbg('New Record Cannot Be Added..');
-                  l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                  p_stdklei2.v_sttm_klei2_details(l_index).product_code;
+                  l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                  p_stdklei3.v_sttm_klei3_details(l_index).field_description;
                   Pr_Log_Error(p_Source,'ST-AMND-004',l_key||'~@'||l_blk);
                END IF;
             END IF;
          END LOOP;
       END IF;
 
-      IF l_Amendable_Nodes.EXISTS('STTM_KLEI2_DETAILS') THEN
-         IF l_Amendable_Nodes('STTM_KLEI2_DETAILS').All_Records = 'Y' THEN
+      IF l_Amendable_Nodes.EXISTS('STTM_KLEI3_DETAILS') THEN
+         IF l_Amendable_Nodes('STTM_KLEI3_DETAILS').All_Records = 'Y' THEN
             Dbg('Logic For Deleting Some Records From Work Record  if Not sent..');
-            l_Wrk_Count := p_Wrk_stdklei2.v_sttm_klei2_details.COUNT;
-            l_Count     := p_stdklei2.v_sttm_klei2_details.COUNT;
+            l_Wrk_Count := p_Wrk_stdklei3.v_sttm_klei3_details.COUNT;
+            l_Count     := p_stdklei3.v_sttm_klei3_details.COUNT;
             IF l_Wrk_Count > 0 THEN
                FOR l_index1 IN 1..l_Wrk_count  LOOP
                   l_Rec_Found := FALSE;
                   IF l_Count > 0 THEN
                      FOR l_index IN 1..l_Count  LOOP
-                        IF (NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_index1).product_code,'@')=  NVL(p_stdklei2.v_sttm_klei2_details  (l_index).product_code,'@')) THEN
+                        IF (NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).field_description,'@')=  NVL(p_stdklei3.v_sttm_klei3_details  (l_index).field_description,'@')) THEN
                            Dbg('Record Found..');
                            l_Rec_Found := TRUE;
                            EXIT;
@@ -787,26 +792,26 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                   END IF;
                   IF l_Rec_Found THEN
                      Dbg('Adding  a Record...');
-                     N_v_sttm_klei2_details(N_v_sttm_klei2_details.COUNT +1 ) :=  p_Wrk_stdklei2.v_sttm_klei2_details(l_Index1);
+                     N_v_sttm_klei3_details(N_v_sttm_klei3_details.COUNT +1 ) :=  p_Wrk_stdklei3.v_sttm_klei3_details(l_Index1);
                   ELSE
                      l_Deleted_Recs := l_Deleted_Recs +1;
-                     IF l_Amendable_Nodes.EXISTS('STTM_KLEI2_DETAILS') THEN
-                        IF l_Amendable_Nodes('STTM_KLEI2_DETAILS').Delete_Allowed = 'N' THEN
+                     IF l_Amendable_Nodes.EXISTS('STTM_KLEI3_DETAILS') THEN
+                        IF l_Amendable_Nodes('STTM_KLEI3_DETAILS').Delete_Allowed = 'N' THEN
                            Dbg('Record Cannot Be Deleted..');
-                           l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                           p_Wrk_stdklei2.v_sttm_klei2_details(l_index1).product_code;
+                           l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                           p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).field_description;
                            Pr_Log_Error(p_Source,'ST-AMND-006',l_Key||'~@'||l_Blk);
                         END IF;
                      ELSE
                         Dbg('Record Cannot Be Deleted..');
-                        l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                        p_Wrk_stdklei2.v_sttm_klei2_details(l_index1).product_code;
+                        l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3_DETAILS.FIELD_DESCRIPTION')||'-'||
+                        p_Wrk_stdklei3.v_sttm_klei3_details(l_index1).field_description;
                         Pr_Log_Error(p_Source,'ST-AMND-006',l_Key||'~@'||l_Blk);
                      END IF;
                   END IF;
                END LOOP;
             END IF;
-            p_Wrk_stdklei2.v_sttm_klei2_details:= N_v_sttm_klei2_details;
+            p_Wrk_stdklei3.v_sttm_klei3_details:= N_v_sttm_klei3_details;
          END IF;
       END IF;
 
@@ -822,7 +827,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    END Fn_Sys_Merge_Amendables;
 
    FUNCTION Fn_Sys_Check_Mandatory_Nodes  (p_Source            IN VARCHAR2,
-      p_Wrk_stdklei2 IN  stpks_stdklei2_Main.Ty_stdklei2,
+      p_Wrk_stdklei3 IN  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -846,7 +851,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    END Fn_Sys_Check_Mandatory_Nodes;
 
    FUNCTION Fn_Sys_Lov_Vals        (p_Source            IN VARCHAR2,
-      p_Wrk_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
+      p_Wrk_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -865,31 +870,6 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
    BEGIN
 
       Dbg('In Fn_Sys_Lov_Vals');
-      l_Blk := 'STTM_KLEI2';
-      l_Fld := 'STTM_KLEI2.CATEGORY';
-      IF p_wrk_stdklei2.v_sttm_klei2.CATEGORY IS NOT NULL THEN
-         SELECT COUNT(*) INTO l_LOV_COUNT  FROM  (select category from LOV_KLEI_CATEGORY) WHERE CATEGORY = P_wrk_stdklei2.v_sttm_klei2.CATEGORY;
-         IF l_lov_count = 0  THEN
-            Dbg('Invalid Value For The Field  :CATEGORY:'||p_Wrk_stdklei2.v_sttm_klei2.CATEGORY);
-            Pr_Log_Error(p_Source,'ST-VALS-011',p_Wrk_stdklei2.v_sttm_klei2.CATEGORY||'~@STTM_KLEI2.CATEGORY~@STTM_KLEI2') ;
-         END IF;
-      END IF;
-      l_Count      := p_Wrk_stdklei2.v_sttm_klei2_details.COUNT;
-      IF l_Count > 0 THEN
-         FOR l_Index  IN 1 .. l_Count LOOP
-            l_Blk := 'STTM_KLEI2_DETAILS';
-            l_Fld := 'STTM_KLEI2_DETAILS.PRODUCT_CODE';
-            IF p_wrk_stdklei2.v_sttm_klei2_details(l_Index).PRODUCT_CODE IS NOT NULL THEN
-               SELECT COUNT(*) INTO l_LOV_COUNT  FROM  (select product_code from LOVKLEIPRODUCTCODE) WHERE PRODUCT_CODE = P_wrk_stdklei2.v_sttm_klei2_details(l_Index).PRODUCT_CODE;
-               IF l_lov_count = 0  THEN
-                  Dbg('Invalid Value For The Field  :PRODUCT_CODE:'||p_Wrk_stdklei2.v_sttm_klei2_details(l_Index).PRODUCT_CODE);
-                  l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2_DETAILS.PRODUCT_CODE')||'-'||
-                  p_Wrk_stdklei2.v_sttm_klei2_details(l_index).product_code;
-                  Pr_Log_Error(p_Source,'ST-VALS-013',p_Wrk_stdklei2.v_sttm_klei2_details(l_Index).PRODUCT_CODE||'~@STTM_KLEI2_DETAILS.PRODUCT_CODE'||'~'||l_Key||'~@STTM_KLEI2_DETAILS') ;
-               END IF;
-            END IF;
-         END LOOP;
-      END IF;
       Dbg('Returning Success From Fn_Sys_Lov_Vals..');
       RETURN TRUE;
    EXCEPTION
@@ -905,9 +885,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       p_Source_Operation  IN     VARCHAR2,
       p_Function_id       IN     VARCHAR2,
       p_Action_Code       IN     VARCHAR2,
-      p_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -937,20 +917,22 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                RETURN FALSE;
          END;
       END IF;
-      l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2.RELATIONSHIP')||'-'||
-      p_stdklei2.v_sttm_klei2.relationship;
-      l_Prev_Key_Tags := 'RELATIONSHIP~';
-      l_Prev_Key_Vals := p_prev_stdklei2.v_sttm_klei2.relationship||'~';
+      l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_TYPE')||'-'||
+      Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_TYPE.'||p_stdklei3.v_sttm_klei3.customer_type)||':'||
+      Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_CATEGORY')||'-'||
+      p_stdklei3.v_sttm_klei3.customer_category;
+      l_Prev_Key_Tags := 'CUSTOMER_TYPE~'||'CUSTOMER_CATEGORY~';
+      l_Prev_Key_Vals := p_prev_stdklei3.v_sttm_klei3.customer_type||'~'||p_prev_stdklei3.v_sttm_klei3.customer_category||'~';
       Dbg('Calling Cspks_Req_Utils.Fn_Maint_Basic_Validations..');
       IF NOT Cspks_Req_Utils.Fn_Maint_Basic_Validations (p_source,
          p_Source_Operation,
          p_Function_Id,
          p_Action_Code,
-         p_Prev_stdklei2.v_sttm_klei2.Mod_No,
-         p_stdklei2.v_sttm_klei2.Mod_No,
-         p_Prev_stdklei2.v_sttm_klei2.Auth_Stat,
-         p_Prev_stdklei2.v_sttm_klei2.Record_Stat,
-         p_Prev_stdklei2.v_sttm_klei2.Once_Auth,
+         p_Prev_stdklei3.v_sttm_klei3.Mod_No,
+         p_stdklei3.v_sttm_klei3.Mod_No,
+         p_Prev_stdklei3.v_sttm_klei3.Auth_Stat,
+         p_Prev_stdklei3.v_sttm_klei3.Record_Stat,
+         p_Prev_stdklei3.v_sttm_klei3.Once_Auth,
          l_Prev_Key_Tags,
          l_Prev_Key_Vals,
          g_Key_Id,
@@ -961,72 +943,72 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
          RETURN FALSE;
       END IF;
       IF ( p_Action_Code IN (Cspks_Req_Global.p_Close,Cspks_Req_Global.p_Reopen,Cspks_Req_Global.p_Delete,Cspks_Req_Global.p_Version_Delete,Cspks_Req_Global.p_Query) OR
-            ( p_Action_Code = Cspks_Req_Global.p_Modify AND NVL(p_Prev_stdklei2.v_sttm_klei2.Once_Auth,'N') = 'Y')) THEN
-         p_Wrk_stdklei2 := p_Prev_stdklei2;
-         p_wrk_stdklei2.v_sttm_klei2.Mod_No := p_stdklei2.v_sttm_klei2.Mod_No;
-         p_Wrk_stdklei2.Addl_Info := p_stdklei2.Addl_Info ;
+            ( p_Action_Code = Cspks_Req_Global.p_Modify AND NVL(p_Prev_stdklei3.v_sttm_klei3.Once_Auth,'N') = 'Y')) THEN
+         p_Wrk_stdklei3 := p_Prev_stdklei3;
+         p_wrk_stdklei3.v_sttm_klei3.Mod_No := p_stdklei3.v_sttm_klei3.Mod_No;
+         p_Wrk_stdklei3.Addl_Info := p_stdklei3.Addl_Info ;
       ELSE
-         p_Wrk_stdklei2 := p_stdklei2;
+         p_Wrk_stdklei3 := p_stdklei3;
       END IF;
       IF p_Action_Code = Cspks_Req_Global.p_Auth THEN
-         IF p_Wrk_stdklei2.v_sttm_klei2.Mod_No IS NULL THEN
-            p_Wrk_stdklei2.v_sttm_klei2.Mod_No           := p_prev_stdklei2.v_sttm_klei2.Mod_No;
+         IF p_Wrk_stdklei3.v_sttm_klei3.Mod_No IS NULL THEN
+            p_Wrk_stdklei3.v_sttm_klei3.Mod_No           := p_prev_stdklei3.v_sttm_klei3.Mod_No;
          END IF;
-         p_Wrk_stdklei2.v_sttm_klei2.Checker_dt_stamp   := fn_mntstamp;
-         p_Wrk_stdklei2.v_sttm_klei2.Checker_id         := Global.user_id;
+         p_Wrk_stdklei3.v_sttm_klei3.Checker_dt_stamp   := fn_mntstamp;
+         p_Wrk_stdklei3.v_sttm_klei3.Checker_id         := Global.user_id;
       ELSIF p_Action_Code IN (Cspks_Req_Global.p_New,Cspks_Req_Global.p_Modify,Cspks_Req_Global.p_Close,Cspks_Req_Global.p_Reopen) THEN
-         p_Wrk_stdklei2.v_sttm_klei2.Auth_Stat        := 'U';
+         p_Wrk_stdklei3.v_sttm_klei3.Auth_Stat        := 'U';
          IF NOT Cspks_Req_Global.Fn_UnTanking THEN
-            p_Wrk_stdklei2.v_sttm_klei2.Maker_Id         := Global.User_Id;
-            p_Wrk_stdklei2.v_sttm_klei2.Maker_Dt_Stamp   := Fn_Mntstamp;
+            p_Wrk_stdklei3.v_sttm_klei3.Maker_Id         := Global.User_Id;
+            p_Wrk_stdklei3.v_sttm_klei3.Maker_Dt_Stamp   := Fn_Mntstamp;
          ELSE
-            p_Wrk_stdklei2.v_sttm_klei2.Maker_Id         := NVL(p_stdklei2.v_sttm_klei2.Maker_Id,Global.User_Id);
-            p_Wrk_stdklei2.v_sttm_klei2.Maker_Dt_Stamp   := NVL(p_stdklei2.v_sttm_klei2.Maker_Dt_Stamp,Fn_Mntstamp);
+            p_Wrk_stdklei3.v_sttm_klei3.Maker_Id         := NVL(p_stdklei3.v_sttm_klei3.Maker_Id,Global.User_Id);
+            p_Wrk_stdklei3.v_sttm_klei3.Maker_Dt_Stamp   := NVL(p_stdklei3.v_sttm_klei3.Maker_Dt_Stamp,Fn_Mntstamp);
          END IF;
 
          IF p_Action_Code = Cspks_Req_Global.p_New THEN
             IF NOT Cspks_Req_Global.Fn_UnTanking THEN
-               p_Wrk_stdklei2.v_sttm_klei2.Mod_No           := 1;
+               p_Wrk_stdklei3.v_sttm_klei3.Mod_No           := 1;
             ELSE
-               p_Wrk_stdklei2.v_sttm_klei2.Mod_No := NVL(p_Wrk_stdklei2.v_sttm_klei2.Mod_No,1);
+               p_Wrk_stdklei3.v_sttm_klei3.Mod_No := NVL(p_Wrk_stdklei3.v_sttm_klei3.Mod_No,1);
             END IF;
-            p_Wrk_stdklei2.v_sttm_klei2.Record_Stat      := 'O';
-            p_Wrk_stdklei2.v_sttm_klei2.Once_Auth        := 'N';
+            p_Wrk_stdklei3.v_sttm_klei3.Record_Stat      := 'O';
+            p_Wrk_stdklei3.v_sttm_klei3.Once_Auth        := 'N';
          ELSE
             IF NOT Cspks_Req_Global.Fn_UnTanking THEN
-               p_wrk_stdklei2.v_sttm_klei2.Mod_No           := NVL(p_prev_stdklei2.v_sttm_klei2.Mod_No,0)+1;
+               p_wrk_stdklei3.v_sttm_klei3.Mod_No           := NVL(p_prev_stdklei3.v_sttm_klei3.Mod_No,0)+1;
             ELSE
-               p_Wrk_stdklei2.v_sttm_klei2.Mod_No           := NVL(p_stdklei2.v_sttm_klei2.Mod_No,1);
+               p_Wrk_stdklei3.v_sttm_klei3.Mod_No           := NVL(p_stdklei3.v_sttm_klei3.Mod_No,1);
             END IF;
-            p_Wrk_stdklei2.v_sttm_klei2.Once_Auth           := NVL(p_Prev_stdklei2.v_sttm_klei2.Once_Auth,'N');
-            p_wrk_stdklei2.v_sttm_klei2.Record_Stat           := NVL(p_prev_stdklei2.v_sttm_klei2.Record_Stat,'O');
+            p_Wrk_stdklei3.v_sttm_klei3.Once_Auth           := NVL(p_Prev_stdklei3.v_sttm_klei3.Once_Auth,'N');
+            p_wrk_stdklei3.v_sttm_klei3.Record_Stat           := NVL(p_prev_stdklei3.v_sttm_klei3.Record_Stat,'O');
          END IF;
          IF p_Action_Code = Cspks_Req_Global.p_Close THEN
-            p_Wrk_stdklei2.v_sttm_klei2.Record_Stat      := 'C';
+            p_Wrk_stdklei3.v_sttm_klei3.Record_Stat      := 'C';
          ELSIF p_Action_Code = Cspks_Req_Global.p_Reopen THEN
-            p_Wrk_stdklei2.v_sttm_klei2.Record_Stat      := 'O';
+            p_Wrk_stdklei3.v_sttm_klei3.Record_Stat      := 'O';
          END IF;
-         p_Wrk_stdklei2.v_sttm_klei2.Checker_id         := Null;
-         p_Wrk_stdklei2.v_sttm_klei2.Checker_Dt_Stamp         := Null;
+         p_Wrk_stdklei3.v_sttm_klei3.Checker_id         := Null;
+         p_Wrk_stdklei3.v_sttm_klei3.Checker_Dt_Stamp         := Null;
       ELSIF p_Action_Code IN ( Cspks_Req_Global.p_Delete,Cspks_Req_Global.p_Version_Delete) THEN
-         IF p_Wrk_stdklei2.v_sttm_klei2.Mod_No IS NULL THEN
-            p_Wrk_stdklei2.v_sttm_klei2.Mod_No           := p_Prev_stdklei2.v_sttm_klei2.Mod_No;
+         IF p_Wrk_stdklei3.v_sttm_klei3.Mod_No IS NULL THEN
+            p_Wrk_stdklei3.v_sttm_klei3.Mod_No           := p_Prev_stdklei3.v_sttm_klei3.Mod_No;
          END IF;
       END IF;
       IF p_Action_Code in  (Cspks_Req_Global.p_New,Cspks_Req_Global.p_Modify) THEN
          Dbg('Calling .Fn_Sys_Basic_Vals..');
          IF NOT Fn_Sys_Basic_Vals(p_Source,
-            p_stdklei2,
+            p_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in .Fn_Sys_Basic_Vals..');
             RETURN FALSE;
          END IF;
 
-         IF p_Action_Code = Cspks_Req_Global.p_New OR  ( p_Action_Code = Cspks_Req_Global.p_Modify AND p_Prev_stdklei2.v_sttm_klei2.Once_Auth = 'N') THEN
+         IF p_Action_Code = Cspks_Req_Global.p_New OR  ( p_Action_Code = Cspks_Req_Global.p_Modify AND p_Prev_stdklei3.v_sttm_klei3.Once_Auth = 'N') THEN
             Dbg('Calling .Fn_Sys_Default_Vals..');
             IF NOT Fn_Sys_Default_Vals(p_Source,
-               p_Wrk_stdklei2,
+               p_Wrk_stdklei3,
                p_Err_Code,
                p_Err_Params)  THEN
                Dbg('Failed in .Fn_Sys_Default_Vals..');
@@ -1034,13 +1016,13 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
             END IF;
 
          END IF;
-         IF p_Action_Code = Cspks_Req_Global.p_Modify AND p_Prev_stdklei2.v_sttm_klei2.Once_Auth = 'Y'THEN
+         IF p_Action_Code = Cspks_Req_Global.p_Modify AND p_Prev_stdklei3.v_sttm_klei3.Once_Auth = 'Y'THEN
             Dbg('Calling Fn_Sys_Merge_Amendables..');
             IF NOT Fn_Sys_Merge_Amendables(p_Source,
                p_Source_Operation,
-               p_stdklei2,
-               p_Prev_stdklei2,
-               p_Wrk_stdklei2,
+               p_stdklei3,
+               p_Prev_stdklei3,
+               p_Wrk_stdklei3,
                p_Err_Code,
                p_Err_Params)  THEN
                Dbg('Failed in .Fn_Sys_Merge_Amendables..');
@@ -1050,7 +1032,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
 
          Dbg('Calling .Fn_Sys_Check_Mandatory_Nodes..');
          IF NOT Fn_Sys_Check_Mandatory_Nodes(p_source,
-            p_Wrk_stdklei2,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in .Fn_Sys_Check_Mandatory_Nodes..');
@@ -1059,7 +1041,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
 
          Dbg('Calling  .Fn_Sys_Lov_Vals..');
          IF NOT Fn_Sys_Lov_Vals(p_source,
-            p_Wrk_stdklei2,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in .Fn_Sys_Lov_Vals..');
@@ -1072,7 +1054,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Sys_Default_And_Validate ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Sys_Default_And_Validate ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -1082,7 +1064,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                               p_Source_operation  IN     VARCHAR2,
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
-      p_Wrk_stdklei2  IN   OUT stpks_stdklei2_Main.Ty_stdklei2,
+      p_Wrk_stdklei3  IN   OUT stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN IS
@@ -1112,8 +1094,8 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       p_Full_Data     IN  VARCHAR2 DEFAULT 'Y',
       p_With_Lock     IN  VARCHAR2 DEFAULT 'N',
       p_QryData_Reqd       IN  VARCHAR2,
-      p_stdklei2         IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2  IN   OUT stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3         IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3  IN   OUT stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN IS
@@ -1129,10 +1111,11 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       l_Bnd_Cntr_1    NUMBER := 0;
       l_Dsn_Rec_Cnt_2 NUMBER := 0;
       l_Bnd_Cntr_2    NUMBER := 0;
-      Cursor c_v_sttm_klei2_details IS
+      Cursor c_v_sttm_klei3_details IS
       SELECT *
-      FROM   STTM_KLEI2_DETAILS
-      WHERE relationship = p_wrk_stdklei2.v_sttm_klei2.relationship
+      FROM   STTM_KLEI3_DETAILS
+      WHERE customer_category = p_wrk_stdklei3.v_sttm_klei3.customer_category
+       AND customer_type = p_wrk_stdklei3.v_sttm_klei3.customer_type
       ;
    BEGIN
       Dbg('In Fn_Sys_Query..');
@@ -1142,22 +1125,25 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
-            p_Wrk_stdklei2,
+            p_Wrk_stdklei3,
             p_Err_Code  ,
             p_Err_Params ) THEN
             Dbg('Failed in Fn_Sys_Query_Desc_Fields..');
             RETURN FALSE;
          END IF;
       ELSE
-         l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2.RELATIONSHIP')||'-'||
-         p_stdklei2.v_sttm_klei2.relationship;
+         l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_TYPE')||'-'||
+         Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_TYPE.'||p_stdklei3.v_sttm_klei3.customer_type)||':'||
+         Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_CATEGORY')||'-'||
+         p_stdklei3.v_sttm_klei3.customer_category;
          Dbg('Get The Master Record...');
          IF NVL(p_With_Lock,'N') = 'Y' THEN
             BEGIN
                SELECT *
-               INTO   p_wrk_stdklei2.v_sttm_klei2
-               FROM  STTM_KLEI2
-               WHERE relationship = p_stdklei2.v_sttm_klei2.relationship
+               INTO   p_wrk_stdklei3.v_sttm_klei3
+               FROM  STTM_KLEI3
+               WHERE customer_type = p_stdklei3.v_sttm_klei3.customer_type
+                AND customer_category = p_stdklei3.v_sttm_klei3.customer_category
                 FOR UPDATE NOWAIT;
             EXCEPTION
                WHEN RECORD_LOCKED THEN
@@ -1173,9 +1159,10 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
          ELSE
             BEGIN
                SELECT *
-               INTO   p_Wrk_stdklei2.v_sttm_klei2
-               FROM  STTM_KLEI2
-               WHERE relationship = p_stdklei2.v_sttm_klei2.relationship
+               INTO   p_Wrk_stdklei3.v_sttm_klei3
+               FROM  STTM_KLEI3
+               WHERE customer_type = p_stdklei3.v_sttm_klei3.customer_type
+                AND customer_category = p_stdklei3.v_sttm_klei3.customer_category
                ;
             EXCEPTION
                WHEN no_data_found THEN
@@ -1188,26 +1175,27 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
 
          END IF;
          IF p_Full_Data = 'Y' AND l_Rec_Exists THEN
-            Dbg('Get the Record For :STTM_KLEI2');
+            Dbg('Get the Record For :STTM_KLEI3');
             BEGIN
                SELECT *
-               INTO p_Wrk_stdklei2.v_sttm_klei2
-               FROM   STTM_KLEI2
-               WHERE relationship = p_wrk_stdklei2.v_sttm_klei2.relationship
+               INTO p_Wrk_stdklei3.v_sttm_klei3
+               FROM   STTM_KLEI3
+               WHERE customer_type = p_wrk_stdklei3.v_sttm_klei3.customer_type
+                AND customer_category = p_wrk_stdklei3.v_sttm_klei3.customer_category
                ;
             EXCEPTION
                WHEN OTHERS THEN
                   Dbg(SQLERRM);
-                  Dbg('Failed in Selecting The Record For :STTM_KLEI2');
+                  Dbg('Failed in Selecting The Record For :STTM_KLEI3');
             END;
-            Dbg('Get the Record For :STTM_KLEI2_DETAILS');
-            OPEN c_v_sttm_klei2_details;
+            Dbg('Get the Record For :STTM_KLEI3_DETAILS');
+            OPEN c_v_sttm_klei3_details;
             LOOP
-               FETCH c_v_sttm_klei2_details
-               BULK COLLECT INTO p_Wrk_stdklei2.v_sttm_klei2_details;
-                EXIT WHEN c_v_sttm_klei2_details%NOTFOUND;
+               FETCH c_v_sttm_klei3_details
+               BULK COLLECT INTO p_Wrk_stdklei3.v_sttm_klei3_details;
+                EXIT WHEN c_v_sttm_klei3_details%NOTFOUND;
             END LOOP;
-            CLOSE c_v_sttm_klei2_details;
+            CLOSE c_v_sttm_klei3_details;
 
          END IF;
          IF p_QryData_Reqd = 'Y' THEN
@@ -1216,7 +1204,7 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                p_Source_Operation,
                p_Function_Id,
                p_Action_Code,
-               p_Wrk_stdklei2,
+               p_Wrk_stdklei3,
                p_Err_Code  ,
                p_Err_Params ) THEN
                Dbg('Failed in Fn_Sys_Query_Desc_Fields..');
@@ -1231,8 +1219,8 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       WHEN OTHERS THEN
          Debug.Pr_Debug('**','In When Others of Fn_Sys_Query ..');
          Debug.Pr_Debug('**',SQLERRM);
-         IF  c_v_sttm_klei2_details%ISOPEN THEN
-            CLOSE c_v_sttm_klei2_details;
+         IF  c_v_sttm_klei3_details%ISOPEN THEN
+            CLOSE c_v_sttm_klei3_details;
          END IF;
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -1242,9 +1230,9 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
                               p_Source_Operation  IN     VARCHAR2,
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
-      p_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2      IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3      IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -1259,81 +1247,79 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei2_main AS
       l_Key               VARCHAR2(5000):= NULL;
       l_Auth_Stat         VARCHAR2(1) := 'A';
       l_Base_Data_From_Fc VARCHAR2(1):= 'Y';
-      I_v_sttm_klei2_details       stpks_stdklei2_Main.Ty_Tb_v_sttm_klei2_details;
-      U_v_sttm_klei2_details       stpks_stdklei2_Main.Ty_Tb_v_sttm_klei2_details;
-      D_v_sttm_klei2_details       stpks_stdklei2_Main.Ty_Tb_v_sttm_klei2_details;
+      I_v_sttm_klei3_details       stpks_stdklei3_Main.Ty_Tb_v_sttm_klei3_details;
+      U_v_sttm_klei3_details       stpks_stdklei3_Main.Ty_Tb_v_sttm_klei3_details;
+      D_v_sttm_klei3_details       stpks_stdklei3_Main.Ty_Tb_v_sttm_klei3_details;
    BEGIN
       Dbg('In Fn_Sys_Upload_Db..');
       IF p_Action_Code = Cspks_Req_Global.p_new THEN
 
-         Dbg('Inserting Into STTM_KLEI2..');
+         Dbg('Inserting Into STTM_KLEI3..');
          BEGIN
-            IF  p_wrk_stdklei2.v_sttm_klei2.relationship IS NOT NULL THEN
+            IF  p_wrk_stdklei3.v_sttm_klei3.customer_type IS NOT NULL AND  p_wrk_stdklei3.v_sttm_klei3.customer_category IS NOT NULL THEN
                Dbg('Record Sent..');
-               INSERT INTO  STTM_KLEI2
-               VALUES p_wrk_stdklei2.v_sttm_klei2;
+               INSERT INTO  STTM_KLEI3
+               VALUES p_wrk_stdklei3.v_sttm_klei3;
             END IF;
          EXCEPTION
             WHEN OTHERS THEN
-               Dbg('Failed In Insert intoSTTM_KLEI2..');
+               Dbg('Failed In Insert intoSTTM_KLEI3..');
                Dbg(SQLERRM);
                p_Err_Code    := 'ST-UPLD-001';
-               p_Err_Params  := '@STTM_KLEI2';
+               p_Err_Params  := '@STTM_KLEI3';
                RETURN FALSE;
          END;
 
-         Dbg('Inserting Into STTM_KLEI2_DETAILS..');
+         Dbg('Inserting Into STTM_KLEI3_DETAILS..');
          BEGIN
-            l_Count      := p_wrk_stdklei2.v_sttm_klei2_details.COUNT;
+            l_Count      := p_wrk_stdklei3.v_sttm_klei3_details.COUNT;
             FORALL l_index IN  1..l_count
-            INSERT INTO STTM_KLEI2_DETAILS
-            VALUES p_wrk_stdklei2.v_sttm_klei2_details(l_index);
+            INSERT INTO STTM_KLEI3_DETAILS
+            VALUES p_wrk_stdklei3.v_sttm_klei3_details(l_index);
          EXCEPTION
             WHEN OTHERS THEN
-               Dbg('Failed In Insert intoSTTM_KLEI2_DETAILS..');
+               Dbg('Failed In Insert intoSTTM_KLEI3_DETAILS..');
                Dbg(SQLERRM);
                p_Err_Code    := 'ST-UPLD-001';
-               p_Err_Params  := '@STTM_KLEI2_DETAILS';
+               p_Err_Params  := '@STTM_KLEI3_DETAILS';
                RETURN FALSE;
          END;
       ELSIF p_Action_Code = Cspks_Req_Global.p_modify THEN
 
-         Dbg('Updating Single Record Node :  STTM_KLEI2..');
+         Dbg('Updating Single Record Node :  STTM_KLEI3..');
          BEGIN
-            UPDATE STTM_KLEI2
+            UPDATE STTM_KLEI3
             SET
-            CATEGORY = p_Wrk_stdklei2.v_sttm_klei2.CATEGORY,
-            DESCRIPTION = p_Wrk_stdklei2.v_sttm_klei2.DESCRIPTION,
-            PRODUCT_RESTRICTION = p_Wrk_stdklei2.v_sttm_klei2.PRODUCT_RESTRICTION,
-            MAKER_ID = p_Wrk_stdklei2.v_sttm_klei2.MAKER_ID,
-            MAKER_DT_STAMP = p_Wrk_stdklei2.v_sttm_klei2.MAKER_DT_STAMP,
-            CHECKER_ID = p_Wrk_stdklei2.v_sttm_klei2.CHECKER_ID,
-            CHECKER_DT_STAMP = p_Wrk_stdklei2.v_sttm_klei2.CHECKER_DT_STAMP,
-            MOD_NO = p_Wrk_stdklei2.v_sttm_klei2.MOD_NO,
-            RECORD_STAT = p_Wrk_stdklei2.v_sttm_klei2.RECORD_STAT,
-            AUTH_STAT = p_Wrk_stdklei2.v_sttm_klei2.AUTH_STAT,
-            ONCE_AUTH = p_Wrk_stdklei2.v_sttm_klei2.ONCE_AUTH
-WHERE relationship = p_Wrk_stdklei2.v_sttm_klei2.relationship
+            MAKER_ID = p_Wrk_stdklei3.v_sttm_klei3.MAKER_ID,
+            MAKER_DT_STAMP = p_Wrk_stdklei3.v_sttm_klei3.MAKER_DT_STAMP,
+            CHECKER_ID = p_Wrk_stdklei3.v_sttm_klei3.CHECKER_ID,
+            CHECKER_DT_STAMP = p_Wrk_stdklei3.v_sttm_klei3.CHECKER_DT_STAMP,
+            MOD_NO = p_Wrk_stdklei3.v_sttm_klei3.MOD_NO,
+            RECORD_STAT = p_Wrk_stdklei3.v_sttm_klei3.RECORD_STAT,
+            AUTH_STAT = p_Wrk_stdklei3.v_sttm_klei3.AUTH_STAT,
+            ONCE_AUTH = p_Wrk_stdklei3.v_sttm_klei3.ONCE_AUTH
+WHERE customer_type = p_Wrk_stdklei3.v_sttm_klei3.customer_type
+ AND customer_category = p_Wrk_stdklei3.v_sttm_klei3.customer_category
 ;
          EXCEPTION
             WHEN OTHERS THEN
-               Dbg('Failed in Insert Into STTM_KLEI2..');
+               Dbg('Failed in Insert Into STTM_KLEI3..');
                Dbg(SQLERRM);
                p_Err_Code    := 'ST-UPLD-001';
-               p_Err_Params  := '@STTM_KLEI2';
+               p_Err_Params  := '@STTM_KLEI3';
                RETURN FALSE;
          END;
 
 
-         Dbg('Preapring Insert and Update Types for  STTM_KLEI2_DETAILS..');
-         l_Wrk_Count  := p_Wrk_stdklei2.v_sttm_klei2_details.COUNT;
-         l_Prev_Count := p_Prev_stdklei2.v_sttm_klei2_details.COUNT;
+         Dbg('Preapring Insert and Update Types for  STTM_KLEI3_DETAILS..');
+         l_Wrk_Count  := p_Wrk_stdklei3.v_sttm_klei3_details.COUNT;
+         l_Prev_Count := p_Prev_stdklei3.v_sttm_klei3_details.COUNT;
          IF l_Wrk_Count > 0 THEN
             FOR l_index IN 1 .. l_Wrk_Count LOOP
                l_Rec_Found    := FALSE;
                IF l_Prev_Count >  0 THEN
                   FOR l_index1 IN 1..l_Prev_Count  LOOP
-                     IF (NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_index).product_code,'@')=  NVL(p_Prev_stdklei2.v_sttm_klei2_details  (l_index1).product_code,'@')) THEN
+                     IF (NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index).field_description,'@')=  NVL(p_Prev_stdklei3.v_sttm_klei3_details  (l_index1).field_description,'@')) THEN
                         Dbg('Record Has Been Found.Update Case..');
                         l_rec_found := TRUE;
                         EXIT;
@@ -1342,23 +1328,23 @@ WHERE relationship = p_Wrk_stdklei2.v_sttm_klei2.relationship
                END IF;
                IF l_rec_found THEN
                   Dbg('Record is Modified...');
-                  U_v_sttm_klei2_details(U_v_sttm_klei2_details.COUNT +1 ) :=  p_Wrk_stdklei2.v_sttm_klei2_details(l_index);
+                  U_v_sttm_klei3_details(U_v_sttm_klei3_details.COUNT +1 ) :=  p_Wrk_stdklei3.v_sttm_klei3_details(l_index);
                ELSE
                   Dbg('Record is Added...');
-                  I_v_sttm_klei2_details(I_v_sttm_klei2_details.COUNT +1 ) :=  p_Wrk_stdklei2.v_sttm_klei2_details(l_index);
+                  I_v_sttm_klei3_details(I_v_sttm_klei3_details.COUNT +1 ) :=  p_Wrk_stdklei3.v_sttm_klei3_details(l_index);
                END IF;
             END LOOP;
          END IF;
 
-         Dbg('Preapring Delete Types for  STTM_KLEI2_DETAILS..');
-         l_Wrk_Count  := p_wrk_stdklei2.v_sttm_klei2_details.COUNT;
-         l_Prev_Count := p_prev_stdklei2.v_sttm_klei2_details.COUNT;
+         Dbg('Preapring Delete Types for  STTM_KLEI3_DETAILS..');
+         l_Wrk_Count  := p_wrk_stdklei3.v_sttm_klei3_details.COUNT;
+         l_Prev_Count := p_prev_stdklei3.v_sttm_klei3_details.COUNT;
          IF l_Prev_Count > 0 THEN
             FOR l_index1 IN 1 .. l_Prev_Count LOOP
                l_Rec_Found    := FALSE;
                IF l_Wrk_Count >  0 THEN
                   FOR l_index IN 1..l_Wrk_Count  LOOP
-                     IF (NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_index).product_code,'@')=  NVL(p_Prev_stdklei2.v_sttm_klei2_details  (l_index1).product_code,'@')) THEN
+                     IF (NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_index).field_description,'@')=  NVL(p_Prev_stdklei3.v_sttm_klei3_details  (l_index1).field_description,'@')) THEN
                         Dbg('Record Has Been Found.Update Case..');
                         l_Rec_Found := TRUE;
                         EXIT;
@@ -1367,52 +1353,54 @@ WHERE relationship = p_Wrk_stdklei2.v_sttm_klei2.relationship
                END IF;
                IF NOT l_Rec_Found THEN
                   Dbg('Record is Deleted...');
-                  D_v_sttm_klei2_details(D_v_sttm_klei2_details.COUNT +1 ) :=  p_Prev_stdklei2.v_sttm_klei2_details(l_index1);
+                  D_v_sttm_klei3_details(D_v_sttm_klei3_details.COUNT +1 ) :=  p_Prev_stdklei3.v_sttm_klei3_details(l_index1);
                END IF;
             END LOOP;
          END IF;
-         l_Del_Count  := D_v_sttm_klei2_details.COUNT;
+         l_Del_Count  := D_v_sttm_klei3_details.COUNT;
          Dbg('Records Deleted  :'||l_Del_Count);
          IF l_Del_Count > 0 THEN
             FOR l_index IN 1 .. l_del_count LOOP
                Dbg('Deleting Record...');
-               DELETE STTM_KLEI2_DETAILS
-               WHERE product_code = D_v_sttm_klei2_details(l_index).product_code
+               DELETE STTM_KLEI3_DETAILS
+               WHERE field_description = D_v_sttm_klei3_details(l_index).field_description
                ;
             END LOOP;
          END IF;
-         l_Ins_Count  := I_v_sttm_klei2_details.COUNT;
+         l_Ins_Count  := I_v_sttm_klei3_details.COUNT;
          Dbg('New Records Added  :'||l_ins_count);
          BEGIN
-            l_Count      := I_v_sttm_klei2_details.COUNT;
+            l_Count      := I_v_sttm_klei3_details.COUNT;
             FORALL l_Index IN  1..l_count
-            INSERT INTO STTM_KLEI2_DETAILS
-            VALUES I_v_sttm_klei2_details(l_index);
+            INSERT INTO STTM_KLEI3_DETAILS
+            VALUES I_v_sttm_klei3_details(l_index);
          EXCEPTION
             WHEN OTHERS THEN
-               Dbg('Failed in Insert IntoSTTM_KLEI2_DETAILS..');
+               Dbg('Failed in Insert IntoSTTM_KLEI3_DETAILS..');
                Dbg(SQLERRM);
                p_Err_Code    := 'ST-UPLD-001';
-               p_Err_Params  := '@STTM_KLEI2_DETAILS';
+               p_Err_Params  := '@STTM_KLEI3_DETAILS';
                RETURN FALSE;
          END;
-         l_Upd_Count  := U_v_sttm_klei2_details.COUNT;
+         l_Upd_Count  := U_v_sttm_klei3_details.COUNT;
          Dbg('Records Modified  :'||l_Upd_Count);
          IF l_Upd_Count > 0 THEN
             FOR l_index IN 1 .. l_Upd_Count LOOP
                Dbg('Updating The  Record...');
                BEGIN
-                  UPDATE STTM_KLEI2_DETAILS
+                  UPDATE STTM_KLEI3_DETAILS
                   SET
-                  RELATIONSHIP = U_v_sttm_klei2_details(l_index).RELATIONSHIP
-WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
+                  CUSTOMER_CATEGORY = U_v_sttm_klei3_details(l_index).CUSTOMER_CATEGORY,
+                  CUSTOMER_TYPE = U_v_sttm_klei3_details(l_index).CUSTOMER_TYPE,
+                  MANDATORY_VALIDATIONS = U_v_sttm_klei3_details(l_index).MANDATORY_VALIDATIONS
+WHERE field_description = U_v_sttm_klei3_details(l_index).field_description
 ;
                EXCEPTION
                   WHEN OTHERS THEN
-                     Dbg('Failed in Updating STTM_KLEI2_DETAILS..');
+                     Dbg('Failed in Updating STTM_KLEI3_DETAILS..');
                      Dbg(SQLERRM);
                      p_Err_Code    := 'ST-UPLD-001';
-                     p_Err_Params  := '@STTM_KLEI2_DETAILS';
+                     p_Err_Params  := '@STTM_KLEI3_DETAILS';
                      RETURN FALSE;
                END;
             END LOOP;
@@ -1422,22 +1410,27 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          Dbg('Deleting The Data..');
 
          
-         DELETE STTM_KLEI2_DETAILS
-         WHERE relationship = p_Wrk_stdklei2.v_sttm_klei2.relationship
+         DELETE STTM_KLEI3_DETAILS
+         WHERE customer_category = p_Wrk_stdklei3.v_sttm_klei3.customer_category
+          AND customer_type = p_Wrk_stdklei3.v_sttm_klei3.customer_type
          ;
 
-         DELETE STTM_KLEI2 WHERE relationship = p_Wrk_stdklei2.v_sttm_klei2.relationship
+         DELETE STTM_KLEI3 WHERE customer_type = p_Wrk_stdklei3.v_sttm_klei3.customer_type
+          AND customer_category = p_Wrk_stdklei3.v_sttm_klei3.customer_category
          ;
 
 
       ELSIF p_Action_Code IN (Cspks_Req_Global.p_Auth,Cspks_Req_Global.p_Close,Cspks_Req_Global.p_Reopen ) THEN
-         l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI2.RELATIONSHIP')||'-'||
-         p_Wrk_stdklei2.v_sttm_klei2.relationship;
+         l_key := Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_TYPE')||'-'||
+         Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_TYPE.'||p_Wrk_stdklei3.v_sttm_klei3.customer_type)||':'||
+         Cspks_Req_Utils.Fn_Get_Item_Desc(p_source,g_ui_name,'STTM_KLEI3.CUSTOMER_CATEGORY')||'-'||
+         p_Wrk_stdklei3.v_sttm_klei3.customer_category;
          BEGIN
             SELECT ROWID
             INTO   l_row_id
-            FROM  STTM_KLEI2
-            WHERE relationship = p_Wrk_stdklei2.v_sttm_klei2.relationship
+            FROM  STTM_KLEI3
+            WHERE customer_type = p_Wrk_stdklei3.v_sttm_klei3.customer_type
+             AND customer_category = p_Wrk_stdklei3.v_sttm_klei3.customer_category
             ;
          EXCEPTION
             WHEN No_Data_Found THEN
@@ -1451,11 +1444,11 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
-            'STTM_KLEI2',
+            'STTM_KLEI3',
             l_Row_Id,
-            p_Wrk_stdklei2.v_sttm_klei2.mod_no,
-            p_Wrk_stdklei2.v_sttm_klei2.Maker_dt_Stamp,
-            p_Wrk_stdklei2.v_sttm_klei2.Checker_dt_Stamp,
+            p_Wrk_stdklei3.v_sttm_klei3.mod_no,
+            p_Wrk_stdklei3.v_sttm_klei3.Maker_dt_Stamp,
+            p_Wrk_stdklei3.v_sttm_klei3.Checker_dt_Stamp,
             g_Key_Id,
             l_Key,
             p_Err_Code,
@@ -1481,7 +1474,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Addl_Info       IN Cspks_Req_Global.Ty_Addl_Info,
-      p_stdklei2       IN   OUT stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3       IN   OUT stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN IS
@@ -1499,7 +1492,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             p_Function_Id,
             p_Action_Code,
             p_Addl_Info ,
-            p_STDKLEI2,
+            p_STDKLEI3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in Fn_Sys_Build_Fc_Type..');
@@ -1511,7 +1504,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             p_Function_Id,
             p_Action_Code,
             p_Addl_Info ,
-            p_STDKLEI2,
+            p_STDKLEI3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in Fn_Sys_Build_Ws_Type..');
@@ -1519,17 +1512,17 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          END IF;
       END IF;
       Pr_Skip_Handler('POSTTYPE');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Post_Build_Type_Structure(p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Post_Build_Type_Structure(p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
             l_Child_Function,
             p_Addl_Info ,
-            p_STDKLEI2,
+            p_STDKLEI3,
             p_Err_Code,
             p_Err_Params)  THEN
-            Dbg('Failed in stpks_stdklei2_Custom.Fn_Post_Build_Type_Structure..');
+            Dbg('Failed in stpks_stdklei3_Custom.Fn_Post_Build_Type_Structure..');
             RETURN FALSE;
          END IF;
       END IF;
@@ -1538,7 +1531,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Build_Type ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Build_Type ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -1549,7 +1542,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Function_id       IN     VARCHAR2,
                               p_action_code       IN     VARCHAR2,
       p_exchange_pattern   IN  VARCHAR2,
-      p_stdklei2          IN stpks_stdklei2_Main.ty_stdklei2,
+      p_stdklei3          IN stpks_stdklei3_Main.ty_stdklei3,
       p_err_code        IN OUT VARCHAR2,
       p_err_params      IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -1565,7 +1558,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             p_source_operation,
             p_Function_id,
             p_action_code,
-            p_stdklei2,
+            p_stdklei3,
             p_err_code,
             p_err_params)  THEN
             dbg('Failed in Fn_Sys_Build_Fc_Ts');
@@ -1577,7 +1570,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             p_Function_id,
             p_action_code,
             p_exchange_pattern,
-            p_stdklei2,
+            p_stdklei3,
             p_err_code,
             p_err_params)  THEN
             dbg('Failed in Fn_Sys_Build_Ws_Ts');
@@ -1590,7 +1583,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
 
    EXCEPTION
       WHEN OTHERS THEN
-         debug.pr_debug('**','In when others of stpks_stdklei2_Main.Fn_Build_Ts_List ..');
+         debug.pr_debug('**','In when others of stpks_stdklei3_Main.Fn_Build_Ts_List ..');
          debug.pr_debug('**',SQLERRM);
          p_err_code    := 'ST-OTHR-001';
          p_err_params  := NULL;
@@ -1600,7 +1593,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Source_Operation  IN     VARCHAR2,
                               p_Function_id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
-      p_stdklei2       IN  OUT stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3       IN  OUT stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -1610,38 +1603,38 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
    BEGIN
 
       Dbg('In Fn_Get_Key_Information..');
-      l_Key_Cols := 'RELATIONSHIP~';
-      l_Key_Vals := p_stdklei2.v_sttm_klei2.relationship||'~';
+      l_Key_Cols := 'CUSTOMER_TYPE~'||'CUSTOMER_CATEGORY~';
+      l_Key_Vals := p_stdklei3.v_sttm_klei3.customer_type||'~'||p_stdklei3.v_sttm_klei3.customer_category||'~';
       Dbg('Calling Cspks_Req_Utils.Fn_Get_Key_Information..');
       IF NOT Cspks_Req_Utils.Fn_Get_Key_Information(p_Source,
          p_Source_Operation,
          p_Function_Id,
          p_Action_Code ,
          'FCCMAINTENANCE',
-         'STTM_KLEI2',
-         'BLK_KLEI2',
-         'Klei2',
+         'STTM_KLEI3',
+         'BLK_KLEI3',
+         'Klei3',
          l_Key_Cols,
          l_Key_Vals,
-         p_stdklei2.Addl_Info,
+         p_stdklei3.Addl_Info,
          p_Err_Code,
          p_Err_Params) THEN
          Dbg('Failed in  Cspks_Req_Utils.Fn_Get_Key_Information..');
          RETURN FALSE;
       END IF;
-      IF p_stdklei2.Addl_Info.EXISTS('RECORD_KEY') THEN
-         G_Req_Key :=  p_stdklei2.Addl_Info('RECORD_KEY');
+      IF p_stdklei3.Addl_Info.EXISTS('RECORD_KEY') THEN
+         G_Req_Key :=  p_stdklei3.Addl_Info('RECORD_KEY');
       END IF;
-      IF p_stdklei2.Addl_Info.EXISTS('KEY_ID') THEN
-         G_Key_Id :=  p_stdklei2.Addl_Info('KEY_ID');
+      IF p_stdklei3.Addl_Info.EXISTS('KEY_ID') THEN
+         G_Key_Id :=  p_stdklei3.Addl_Info('KEY_ID');
       END IF;
-      p_stdklei2.Addl_Info('SENT_MOD_NO') :=p_stdklei2.v_sttm_klei2.Mod_No;
+      p_stdklei3.Addl_Info('SENT_MOD_NO') :=p_stdklei3.v_sttm_klei3.Mod_No;
       Dbg('Returning Succsess From Fn_Get_Key_Information..');
       RETURN TRUE;
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Get_Key_Information..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Get_Key_Information..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -1652,7 +1645,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
       p_Pk_Or_Full     IN  VARCHAR2 DEFAULT 'FULL',
-      p_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code       IN  OUT VARCHAR2,
       p_Err_Params     IN  OUT VARCHAR2)
      RETURN BOOLEAN IS
@@ -1673,25 +1666,25 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          l_Pk_Or_Full := p_Pk_Or_Full;
       END IF;
       Pr_Skip_Handler('PREMAND');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Pre_Check_Mandatory (p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Pre_Check_Mandatory (p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
             p_function_Id  ,
-            p_stdklei2,
+            p_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
-            Dbg('Failed in  stpks_stdklei2_Custom.Fn_Pre_Check_Mandatory..');
+            Dbg('Failed in  stpks_stdklei3_Custom.Fn_Pre_Check_Mandatory..');
             RETURN FALSE;
          END IF;
       END IF;
 
-      IF NOT stpks_stdklei2_Main.Fn_Skip_Sys THEN
+      IF NOT stpks_stdklei3_Main.Fn_Skip_Sys THEN
          Dbg('Calling   Fn_Sys_Check_Mandatory..');
          IF NOT Fn_Sys_Check_Mandatory(p_Source,
             l_Pk_Or_Full,
-            p_stdklei2,
+            p_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in Fn_Sys_Check_Mandatory..');
@@ -1700,17 +1693,17 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       END IF;
 
       Pr_Skip_Handler('POSTMAND');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Post_Check_Mandatory (p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Post_Check_Mandatory (p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
             p_function_Id  ,
             l_Pk_Or_Full,
-            p_stdklei2,
+            p_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
-            Dbg('Failed in  stpks_stdklei2_Custom.Fn_Post_Check_Mandatory..');
+            Dbg('Failed in  stpks_stdklei3_Custom.Fn_Post_Check_Mandatory..');
             RETURN FALSE;
          END IF;
       END IF;
@@ -1719,7 +1712,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Check_Mandatory ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Check_Mandatory ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -1732,8 +1725,8 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       p_Full_Data     IN  VARCHAR2 DEFAULT 'Y',
       p_With_Lock     IN  VARCHAR2 DEFAULT 'N',
       p_QryData_Reqd       IN  VARCHAR2,
-      p_stdklei2         IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2  IN   OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3         IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3  IN   OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN IS
@@ -1750,7 +1743,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
 
       Dbg('In Fn_Query..');
 
-      l_Mod_No := p_stdklei2.v_sttm_klei2.Mod_No;
+      l_Mod_No := p_stdklei3.v_sttm_klei3.Mod_No;
       Dbg('Calling Cspks_Req_Utils.Fn_Get_From_Tanked.');
       IF NOT Cspks_Req_Utils.Fn_Get_Tanked_Data (p_Source,
          p_Source_Operation,
@@ -1773,8 +1766,8 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                p_Source_Operation,
                p_Function_Id,
                p_Action_Code,
-               p_stdklei2.Addl_Info,
-               p_Wrk_stdklei2,
+               p_stdklei3.Addl_Info,
+               p_Wrk_stdklei3,
                p_Err_Code,
                p_Err_Params)  THEN
                Dbg('Failed in Fn_Sys_Build_Fc_Type..');
@@ -1783,11 +1776,11 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             END IF;
             g_Curr_Stage := 'POSTTANKQRY' ;
             l_Skip_custom:= g_Skip_custom;
-            stpks_stdklei2_Main.Pr_Set_Skip_custom;
+            stpks_stdklei3_Main.Pr_Set_Skip_custom;
             Pr_Skip_Handler('POSTTANKQRY');
             Dbg('Calling Post Query Hooks After Query Of Tanked Data');
-            IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-               IF NOT stpks_stdklei2_Custom.Fn_Post_Query (p_Source,
+            IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+               IF NOT stpks_stdklei3_Custom.Fn_Post_Query (p_Source,
                   p_Source_operation,
                   p_Function_id,
                   p_Action_Code,
@@ -1795,11 +1788,11 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                   p_Full_Data,
                   p_With_Lock,
                   p_Qrydata_Reqd,
-                  p_stdklei2,
-                  p_Wrk_stdklei2,
+                  p_stdklei3,
+                  p_Wrk_stdklei3,
                   p_Err_Code,
                   p_Err_Params) THEN
-                  Dbg('Failed in stpks_stdklei2_Custom.Fn_Post_Query of Tanked Data');
+                  Dbg('Failed in stpks_stdklei3_Custom.Fn_Post_Query of Tanked Data');
                   RETURN FALSE;
                END IF;
             END IF;
@@ -1809,8 +1802,8 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       ELSE
          Dbg('Query From Base Tables..');
          Pr_Skip_Handler('PREQRY');
-         IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-            IF NOT stpks_stdklei2_Custom.Fn_Pre_Query (p_Source,
+         IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+            IF NOT stpks_stdklei3_Custom.Fn_Pre_Query (p_Source,
                p_Source_Operation,
                p_Function_Id,
                p_Action_Code,
@@ -1818,15 +1811,15 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                p_Full_Data  ,
                p_With_Lock,
                p_QryData_Reqd,
-               p_stdklei2,
-               p_Wrk_stdklei2,
+               p_stdklei3,
+               p_Wrk_stdklei3,
                p_Err_Code  ,
                p_Err_Params ) THEN
-               Dbg('Failed in stpks_stdklei2_Custom.Fn_Pre_Query..');
+               Dbg('Failed in stpks_stdklei3_Custom.Fn_Pre_Query..');
                RETURN FALSE;
             END IF;
          END IF;
-         IF NOT stpks_stdklei2_Main.Fn_Skip_Sys THEN
+         IF NOT stpks_stdklei3_Main.Fn_Skip_Sys THEN
             IF NOT Fn_Sys_Query (p_Source,
                p_Source_Operation,
                p_Function_Id,
@@ -1834,8 +1827,8 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                p_Full_Data  ,
                p_With_Lock,
                p_QryData_Reqd,
-               p_stdklei2,
-               p_Wrk_stdklei2,
+               p_stdklei3,
+               p_Wrk_stdklei3,
                p_Err_Code  ,
                p_Err_Params ) THEN
                Dbg('Failed in Fn_Sys_Query..');
@@ -1843,8 +1836,8 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             END IF;
          END IF;
          Pr_Skip_Handler('POSTQRY');
-         IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-            IF NOT stpks_stdklei2_Custom.Fn_Post_Query (p_Source,
+         IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+            IF NOT stpks_stdklei3_Custom.Fn_Post_Query (p_Source,
                p_Source_Operation,
                p_Function_Id,
                p_Action_Code,
@@ -1852,11 +1845,11 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                p_Full_Data  ,
                p_With_Lock,
                p_QryData_Reqd,
-               p_stdklei2,
-               p_Wrk_stdklei2,
+               p_stdklei3,
+               p_Wrk_stdklei3,
                p_Err_Code  ,
                p_Err_Params ) THEN
-               Dbg('Failed in stpks_stdklei2_Custom.Fn_Post_Query..');
+               Dbg('Failed in stpks_stdklei3_Custom.Fn_Post_Query..');
                RETURN FALSE;
             END IF;
          END IF;
@@ -1876,9 +1869,9 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Source_Operation  IN     VARCHAR2,
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
-      p_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2 IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3 IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -1904,38 +1897,38 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          l_Full_data,
          l_With_Lock,
          l_Qrydata_Reqd,
-         p_stdklei2,
-         p_Prev_stdklei2,
+         p_stdklei3,
+         p_Prev_stdklei3,
          p_Err_Code,
          p_Err_Params) THEN
          Dbg('Failed in Fn_Query..');
          RETURN FALSE;
       END IF;
       Pr_Skip_Handler('PREDFLT');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Pre_Default_And_Validate (p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Pre_Default_And_Validate (p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
             p_function_Id  ,
-            p_stdklei2,
-            p_Prev_stdklei2,
-            p_Wrk_stdklei2,
+            p_stdklei3,
+            p_Prev_stdklei3,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
-            Dbg('Failed in stpks_stdklei2_Custom.Fn_Pre_Default_And_Validate..');
+            Dbg('Failed in stpks_stdklei3_Custom.Fn_Pre_Default_And_Validate..');
             RETURN FALSE;
          END IF;
       END IF;
-      IF NOT stpks_stdklei2_Main.Fn_Skip_Sys THEN
+      IF NOT stpks_stdklei3_Main.Fn_Skip_Sys THEN
          Dbg('Calling in Fn_Sys_Default_and_Validate..');
          IF NOT Fn_Sys_Default_and_Validate (p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
-            p_stdklei2,
-            p_Prev_stdklei2,
-            p_Wrk_stdklei2,
+            p_stdklei3,
+            p_Prev_stdklei3,
+            p_Wrk_stdklei3,
             p_Err_Code  ,
             p_Err_Params ) THEN
             Dbg('Failed in Fn_Sys_Default_and_Validate..');
@@ -1943,18 +1936,18 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          END IF;
       END IF;
       Pr_Skip_Handler('POSTDFLT');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Post_Default_And_Validate (p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Post_Default_And_Validate (p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
             p_function_Id  ,
-            p_stdklei2,
-            p_Prev_stdklei2,
-            p_Wrk_stdklei2,
+            p_stdklei3,
+            p_Prev_stdklei3,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
-            Dbg('Failed in stpks_stdklei2_Custom.Fn_Post_Default_And_Validate..');
+            Dbg('Failed in stpks_stdklei3_Custom.Fn_Post_Default_And_Validate..');
             RETURN FALSE;
          END IF;
       END IF;
@@ -1965,7 +1958,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
             p_Function_Id,
             p_Action_Code,
             l_Pk_Or_Full,
-            p_Wrk_stdklei2,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
             Dbg('Failed in Fn_Check_Mandatory..');
@@ -1977,7 +1970,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Default_And_Validate ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Default_And_Validate ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -1989,9 +1982,9 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Action_Code       IN     VARCHAR2,
       p_Post_Upl_Stat    IN     VARCHAR2,
       p_Multi_Trip_Id    IN  VARCHAR2,
-      p_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Prev_stdklei2     IN  stpks_stdklei2_Main.Ty_stdklei2,
-      p_Wrk_stdklei2      IN OUT  stpks_stdklei2_Main.Ty_stdklei2,
+      p_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Prev_stdklei3     IN  stpks_stdklei3_Main.Ty_stdklei3,
+      p_Wrk_stdklei3      IN OUT  stpks_stdklei3_Main.Ty_stdklei3,
       p_Err_Code          IN OUT VARCHAR2,
       p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN   IS
@@ -2007,31 +2000,31 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       Dbg('In Fn_Upload_Db..');
 
       Pr_Skip_Handler('PREUPLD');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Pre_Upload_Db (p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Pre_Upload_Db (p_Source,
             p_Source_operation,
             p_Function_id,
             p_Action_Code,
             p_function_Id  ,
             p_Post_Upl_Stat,
             p_Multi_Trip_Id,
-            p_stdklei2,
-            p_Prev_stdklei2,
-            p_Wrk_stdklei2,
+            p_stdklei3,
+            p_Prev_stdklei3,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
-            Dbg('Failed in stpks_stdklei2_Custom.Fn_Pre_Upload_Db..');
+            Dbg('Failed in stpks_stdklei3_Custom.Fn_Pre_Upload_Db..');
             RETURN FALSE;
          END IF;
       END IF;
-      IF NOT stpks_stdklei2_Main.Fn_Skip_Sys THEN
+      IF NOT stpks_stdklei3_Main.Fn_Skip_Sys THEN
          IF NOT Fn_Sys_Upload_Db (p_Source,
             p_Source_Operation,
             p_Function_Id,
             p_Action_Code,
-            p_stdklei2,
-            p_Prev_stdklei2,
-            p_Wrk_stdklei2,
+            p_stdklei3,
+            p_Prev_stdklei3,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
             Dbg('Failed in Fn_Pre_Upload_Db..');
@@ -2040,20 +2033,20 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       END IF;
 
       Pr_Skip_Handler('POSTUPLD');
-      IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-         IF NOT stpks_stdklei2_Custom.Fn_Post_Upload_Db (p_Source,
+      IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+         IF NOT stpks_stdklei3_Custom.Fn_Post_Upload_Db (p_Source,
             p_Source_operation,
             p_Function_id,
             p_Action_Code,
             p_function_Id  ,
             p_Post_Upl_Stat,
             p_Multi_Trip_Id,
-            p_stdklei2,
-            p_Prev_stdklei2,
-            p_Wrk_stdklei2,
+            p_stdklei3,
+            p_Prev_stdklei3,
+            p_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
-            Dbg('Failed in stpks_stdklei2_Custom.Fn_Post_Upload_Db..');
+            Dbg('Failed in stpks_stdklei3_Custom.Fn_Post_Upload_Db..');
             RETURN FALSE;
          END IF;
       END IF;
@@ -2062,7 +2055,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others of stpks_stdklei2_Main.Fn_Upload_Db ..');
+         Debug.Pr_Debug('**','In When Others of stpks_stdklei3_Main.Fn_Upload_Db ..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -2072,13 +2065,13 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Source_Operation  IN     VARCHAR2,
                               p_Function_Id       IN     VARCHAR2,
                               p_Action_Code       IN     VARCHAR2,
-                              p_stdklei2          IN  stpks_stdklei2_Main.Ty_stdklei2,
+                              p_stdklei3          IN  stpks_stdklei3_Main.Ty_stdklei3,
                               p_Record_Master     IN OUT Sttbs_Record_Master%ROWTYPE,
                               p_Err_Code          IN OUT VARCHAR2,
                               p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN IS
 
-      l_Summary_Rec     STTM_KLEI2%ROWTYPE;
+      l_Summary_Rec     STTM_KLEI3%ROWTYPE;
       l_Summary_Rec_Found BOOLEAN := TRUE;
    BEGIN
 
@@ -2087,16 +2080,14 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       IF  p_Action_Code IN (Cspks_Req_Global.p_New,Cspks_Req_Global.p_Modify,Cspks_Req_Global.p_Close,Cspks_Req_Global.p_Reopen) THEN
          Dbg('Populating Record Master ..');
          IF g_Key_Id IS NOT NULL THEN
-            l_Summary_Rec := p_stdklei2.v_sttm_klei2;
+            l_Summary_Rec := p_stdklei3.v_sttm_klei3;
             IF l_Summary_Rec_Found THEN
                Dbg('Summary Record Found..');
                p_Record_Master.Key_Id := g_Key_Id;
                p_Record_Master.AUTH_STAT := l_Summary_Rec.AUTH_STAT;
                p_Record_Master.RECORD_STAT := l_Summary_Rec.RECORD_STAT;
-               p_Record_Master.CHAR_FLD_1 := l_Summary_Rec.RELATIONSHIP;
-               p_Record_Master.CHAR_FLD_2 := l_Summary_Rec.PRODUCT_RESTRICTION;
-               p_Record_Master.CHAR_FLD_3 := l_Summary_Rec.DESCRIPTION;
-               p_Record_Master.CHAR_FLD_4 := l_Summary_Rec.CATEGORY;
+               p_Record_Master.CHAR_FLD_1 := l_Summary_Rec.CUSTOMER_CATEGORY;
+               p_Record_Master.CHAR_FLD_2 := l_Summary_Rec.CUSTOMER_TYPE;
             END IF;
          END IF;
       END IF;
@@ -2135,7 +2126,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          Dbg('Rolling Back The Modification..');
          p_Tanking_Status := 'T';
          g_Tanking_Status := 'T';
-         ROLLBACK TO Sp_Main_Stdklei2;
+         ROLLBACK TO Sp_Main_Stdklei3;
       END IF;
 
       Dbg('Returning Success From Fn_Tank_Modification..');
@@ -2157,9 +2148,9 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                               p_Multi_Trip_Id       IN     VARCHAR2,
                               p_Request_No          IN     VARCHAR2,
                               p_Record_Master     IN  Sttbs_Record_Master%ROWTYPE,
-                              p_stdklei2          IN  stpks_stdklei2_Main.Ty_stdklei2,
-                              p_Prev_stdklei2          IN  stpks_stdklei2_Main.Ty_stdklei2,
-                              p_wrk_stdklei2          IN  stpks_stdklei2_Main.Ty_stdklei2,
+                              p_stdklei3          IN  stpks_stdklei3_Main.Ty_stdklei3,
+                              p_Prev_stdklei3          IN  stpks_stdklei3_Main.Ty_stdklei3,
+                              p_wrk_stdklei3          IN  stpks_stdklei3_Main.Ty_stdklei3,
       p_Tanking_Status IN VARCHAR2,
                               p_Err_Code          IN OUT VARCHAR2,
                               p_Err_Params        IN OUT VARCHAR2)
@@ -2188,7 +2179,7 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
       l_Rec_Modified    BOOLEAN:= FALSE;
       l_Record_log      Sttbs_Record_Log%ROWTYPE;
       l_Field_log       Sttbs_Field_log%ROWTYPE;
-      l_wrk_stdklei2      stpks_stdklei2_Main.Ty_stdklei2;
+      l_wrk_stdklei3      stpks_stdklei3_Main.Ty_stdklei3;
       l_Skip_custom      BOOLEAN := FALSE;
       l_Tb_Field_Log    Cspks_Req_Global.Ty_Tb_Fld_Log;
 
@@ -2228,22 +2219,22 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
          Dbg('Maintenance Log is Required ..');
          IF l_Key_Id IS NOT NULL THEN
             IF p_Action_Code IN( Cspks_Req_Global.p_auth,Cspks_Req_Global.p_Delete,Cspks_Req_Global.p_Version_Delete) THEN
-               IF p_stdklei2.v_sttm_klei2.Mod_no IS NOT NULL THEN
-                  l_Mod_No           := p_stdklei2.v_sttm_klei2.Mod_No;
+               IF p_stdklei3.v_sttm_klei3.Mod_no IS NOT NULL THEN
+                  l_Mod_No           := p_stdklei3.v_sttm_klei3.Mod_No;
                ELSE
-                  l_Mod_No           := p_Wrk_stdklei2.v_sttm_klei2.Mod_No;
+                  l_Mod_No           := p_Wrk_stdklei3.v_sttm_klei3.Mod_No;
                END IF;
             ELSE
-               l_mod_no           := p_wrk_stdklei2.v_sttm_klei2.mod_no;
+               l_mod_no           := p_wrk_stdklei3.v_sttm_klei3.mod_no;
             END IF;
-              l_Auth_Stat := NVL(p_Wrk_stdklei2.v_sttm_klei2.Auth_Stat,'U') ;
+              l_Auth_Stat := NVL(p_Wrk_stdklei3.v_sttm_klei3.Auth_Stat,'U') ;
             IF NOT Cspks_Req_Utils.Fn_Maint_Log(p_Source,
                 p_Source_Operation  ,
                 p_Function_Id ,
                 p_Action_Code,
                 p_Multi_Trip_Id ,
                 p_Request_No ,
-               'STTM_KLEI2',
+               'STTM_KLEI3',
                l_Key_Id,
                l_Mod_No,
                l_Auth_Stat,
@@ -2259,25 +2250,25 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                l_Field_log.Mod_No := l_Mod_No;
                l_Field_log.Function_id := p_Function_Id;
 
-               l_Dbt := 'STTM_KLEI2';
+               l_Dbt := 'STTM_KLEI3';
 
-               l_Blk := 'STTM_KLEI2';
+               l_Blk := 'STTM_KLEI3';
                l_Rec_Modified := FALSE;
                l_Prev_Found := FALSE;
                l_Wrk_Found := FALSE;
 
-               IF p_Prev_stdklei2.v_sttm_klei2.relationship IS NOT NULL THEN
+               IF p_Prev_stdklei3.v_sttm_klei3.customer_type IS NOT NULL AND p_Prev_stdklei3.v_sttm_klei3.customer_category IS NOT NULL THEN
                   Dbg('Record Has Been Sent..');
                   l_prev_found := TRUE;
                END IF;
-               IF p_Wrk_stdklei2.v_sttm_klei2.relationship IS NOT NULL THEN
+               IF p_Wrk_stdklei3.v_sttm_klei3.customer_type IS NOT NULL AND p_Wrk_stdklei3.v_sttm_klei3.customer_category IS NOT NULL THEN
                   Dbg('Record Has Been Sent..');
                   l_Wrk_Found := TRUE;
                END IF;
                IF l_Prev_Found   THEN
-                  l_Dtl_key := '~STTM_KLEI2~'||p_Prev_stdklei2.v_sttm_klei2.relationship||'~';
+                  l_Dtl_key := '~STTM_KLEI3~'||p_Prev_stdklei3.v_sttm_klei3.customer_type||'~'||p_Prev_stdklei3.v_sttm_klei3.customer_category||'~';
                ELSIF l_Wrk_Found   THEN
-                  l_Dtl_key := '~STTM_KLEI2~'||p_Wrk_stdklei2.v_sttm_klei2.relationship||'~';
+                  l_Dtl_key := '~STTM_KLEI3~'||p_Wrk_stdklei3.v_sttm_klei3.customer_type||'~'||p_Wrk_stdklei3.v_sttm_klei3.customer_category||'~';
                END IF;
                IF l_Wrk_Found  OR l_Prev_Found THEN
                   IF l_Wrk_Found  AND l_Prev_Found THEN
@@ -2287,39 +2278,38 @@ WHERE product_code = U_v_sttm_klei2_details(l_index).product_code
                   ELSIF (NOT l_wrk_Found)  AND l_Prev_Found THEN
                      l_Rec_Action := 'D';
                   END IF;
-                  Pr_Log_Change('CATEGORY',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.category,p_Wrk_stdklei2.v_sttm_klei2.category);
-Pr_Log_Change('DESCRIPTION',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.description,p_Wrk_stdklei2.v_sttm_klei2.description);
-Pr_Log_Change('PRODUCT_RESTRICTION',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.product_restriction,p_Wrk_stdklei2.v_sttm_klei2.product_restriction);
-Pr_Log_Change('RELATIONSHIP',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.relationship,p_Wrk_stdklei2.v_sttm_klei2.relationship);
-Pr_Log_Change('MAKER_ID',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.maker_id,p_Wrk_stdklei2.v_sttm_klei2.maker_id);
-Pr_Log_Change('MAKER_DT_STAMP',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.maker_dt_stamp,p_Wrk_stdklei2.v_sttm_klei2.maker_dt_stamp);
-Pr_Log_Change('CHECKER_ID',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.checker_id,p_Wrk_stdklei2.v_sttm_klei2.checker_id);
-Pr_Log_Change('CHECKER_DT_STAMP',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.checker_dt_stamp,p_Wrk_stdklei2.v_sttm_klei2.checker_dt_stamp);
-Pr_Log_Change('MOD_NO',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.mod_no,p_Wrk_stdklei2.v_sttm_klei2.mod_no);
-Pr_Log_Change('RECORD_STAT',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.record_stat,p_Wrk_stdklei2.v_sttm_klei2.record_stat);
-Pr_Log_Change('AUTH_STAT',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.auth_stat,p_Wrk_stdklei2.v_sttm_klei2.auth_stat);
-Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_Wrk_stdklei2.v_sttm_klei2.once_auth);
+                  Pr_Log_Change('CUSTOMER_CATEGORY',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.customer_category,p_Wrk_stdklei3.v_sttm_klei3.customer_category);
+Pr_Log_Change('CUSTOMER_TYPE',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.customer_type,p_Wrk_stdklei3.v_sttm_klei3.customer_type);
+Pr_Log_Change('MAKER_ID',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.maker_id,p_Wrk_stdklei3.v_sttm_klei3.maker_id);
+Pr_Log_Change('MAKER_DT_STAMP',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.maker_dt_stamp,p_Wrk_stdklei3.v_sttm_klei3.maker_dt_stamp);
+Pr_Log_Change('CHECKER_ID',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.checker_id,p_Wrk_stdklei3.v_sttm_klei3.checker_id);
+Pr_Log_Change('CHECKER_DT_STAMP',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.checker_dt_stamp,p_Wrk_stdklei3.v_sttm_klei3.checker_dt_stamp);
+Pr_Log_Change('MOD_NO',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.mod_no,p_Wrk_stdklei3.v_sttm_klei3.mod_no);
+Pr_Log_Change('RECORD_STAT',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.record_stat,p_Wrk_stdklei3.v_sttm_klei3.record_stat);
+Pr_Log_Change('AUTH_STAT',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.auth_stat,p_Wrk_stdklei3.v_sttm_klei3.auth_stat);
+Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei3.v_sttm_klei3.once_auth,p_Wrk_stdklei3.v_sttm_klei3.once_auth);
 
 
                               END IF;
 
 
-               l_Dbt := 'STTM_KLEI2_DETAILS';
-               l_Blk := 'STTM_KLEI2_DETAILS';
-               l_Wrk_Count  := p_Wrk_stdklei2.v_sttm_klei2_details.COUNT;
-               l_Prev_Count      := p_Prev_stdklei2.v_sttm_klei2_details.COUNT;
+               l_Dbt := 'STTM_KLEI3_DETAILS';
+               l_Blk := 'STTM_KLEI3_DETAILS';
+               l_Wrk_Count  := p_Wrk_stdklei3.v_sttm_klei3_details.COUNT;
+               l_Prev_Count      := p_Prev_stdklei3.v_sttm_klei3_details.COUNT;
                IF l_Wrk_count > 0 THEN
                   FOR l_Index IN 1..l_Wrk_count  LOOP
-                     l_Dtl_key := '~STTM_KLEI2_DETAILS~'||p_wrk_stdklei2.v_sttm_klei2_details(l_index).product_code||'~';
+                     l_Dtl_key := '~STTM_KLEI3_DETAILS~'||p_wrk_stdklei3.v_sttm_klei3_details(l_index).field_description||'~';
                      l_Rec_Found := FALSE;
                      l_Rec_Modified := FALSE;
                      IF l_Prev_count > 0 THEN
                         FOR l_Index1 IN 1..l_Prev_count  LOOP
-                           IF (NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_Index).product_code,'@')=  NVL(p_Prev_stdklei2.v_sttm_klei2_details(l_Index1).product_code,'@')) THEN
+                           IF (NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_Index).field_description,'@')=  NVL(p_Prev_stdklei3.v_sttm_klei3_details(l_Index1).field_description,'@')) THEN
                               Dbg('Record Found..');
                               l_Rec_Found := TRUE;
                               l_Matched_Rec := l_Index1;
-                              Pr_Log_Change('PRODUCT_CODE','M',p_Prev_stdklei2.v_sttm_klei2_details(l_Index1).product_code,p_Wrk_stdklei2.v_sttm_klei2_details(l_Index).product_code);
+                              Pr_Log_Change('FIELD_DESCRIPTION','M',p_Prev_stdklei3.v_sttm_klei3_details(l_Index1).field_description,p_Wrk_stdklei3.v_sttm_klei3_details(l_Index).field_description);
+Pr_Log_Change('MANDATORY_VALIDATIONS','M',p_Prev_stdklei3.v_sttm_klei3_details(l_Index1).mandatory_validations,p_Wrk_stdklei3.v_sttm_klei3_details(l_Index).mandatory_validations);
 
 
 
@@ -2328,21 +2318,22 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                      END IF;
                      IF NOT l_rec_found THEN
                         Dbg('New Record Found..');
-                        Pr_Log_Change('PRODUCT_CODE','N',NULL,p_wrk_stdklei2.v_sttm_klei2_details(l_Index).product_code);
+                        Pr_Log_Change('FIELD_DESCRIPTION','N',NULL,p_wrk_stdklei3.v_sttm_klei3_details(l_Index).field_description);
+Pr_Log_Change('MANDATORY_VALIDATIONS','N',NULL,p_wrk_stdklei3.v_sttm_klei3_details(l_Index).mandatory_validations);
 
 
                                           END IF;
                   END LOOP;
                END IF;
-               l_Prev_count      := p_Prev_stdklei2.v_sttm_klei2_details.COUNT;
-               l_Wrk_Count  := p_Wrk_stdklei2.v_sttm_klei2_details.COUNT;
+               l_Prev_count      := p_Prev_stdklei3.v_sttm_klei3_details.COUNT;
+               l_Wrk_Count  := p_Wrk_stdklei3.v_sttm_klei3_details.COUNT;
                IF l_Prev_Count > 0 THEN
                   FOR l_Index IN 1..l_Prev_count  LOOP
                      l_Rec_Found := FALSE;
                      l_Rec_Modified := FALSE;
                      IF l_Wrk_Count > 0 THEN
                         FOR l_Index1 IN 1..l_Wrk_Count  LOOP
-                           IF (NVL(p_Prev_stdklei2.v_sttm_klei2_details(l_Index).product_code,'@')=  NVL(p_Wrk_stdklei2.v_sttm_klei2_details(l_Index1).product_code,'@')) THEN
+                           IF (NVL(p_Prev_stdklei3.v_sttm_klei3_details(l_Index).field_description,'@')=  NVL(p_Wrk_stdklei3.v_sttm_klei3_details(l_Index1).field_description,'@')) THEN
                               Dbg('Record Found..');
                               l_Rec_Found := TRUE;
                               EXIT;
@@ -2352,8 +2343,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                      END IF;
                      IF NOT l_Rec_Found THEN
                         Dbg('Record Deleted..');
-                        l_Dtl_key := '~STTM_KLEI2_DETAILS~'||p_Prev_stdklei2.v_sttm_klei2_details(l_Index).product_code||'~';
-                        Pr_Log_Change('PRODUCT_CODE','D',p_Prev_stdklei2.v_sttm_klei2_details(l_Index).product_code,NULL);
+                        l_Dtl_key := '~STTM_KLEI3_DETAILS~'||p_Prev_stdklei3.v_sttm_klei3_details(l_Index).field_description||'~';
+                        Pr_Log_Change('FIELD_DESCRIPTION','D',p_Prev_stdklei3.v_sttm_klei3_details(l_Index).field_description,NULL);
+Pr_Log_Change('MANDATORY_VALIDATIONS','D',p_Prev_stdklei3.v_sttm_klei3_details(l_Index).mandatory_validations,NULL);
 
 
                                           END IF;
@@ -2379,24 +2371,24 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             END IF;
             g_curr_stage := 'POSTMAINTLOG';
             l_Skip_custom:= g_Skip_custom;
-            stpks_stdklei2_Main.Pr_Set_Skip_CUSTOM;
-            l_Wrk_stdklei2:=p_Wrk_stdklei2;
+            stpks_stdklei3_Main.Pr_Set_Skip_CUSTOM;
+            l_Wrk_stdklei3:=p_Wrk_stdklei3;
             Pr_Skip_Handler('POSTMAINTLOG');
             Dbg('Calling Post Upload Hooks For any Additional Logging');
-            IF NOT stpks_stdklei2_Main.Fn_Skip_custom  THEN
-               IF NOT stpks_stdklei2_Custom.Fn_Post_Upload_Db (p_Source,
+            IF NOT stpks_stdklei3_Main.Fn_Skip_custom  THEN
+               IF NOT stpks_stdklei3_Custom.Fn_Post_Upload_Db (p_Source,
                   p_Source_operation,
                   p_Function_id,
                   p_Action_Code,
                   p_function_Id  ,
                   g_Post_Upl_Stat,
                   p_Multi_Trip_Id,
-                  p_stdklei2,
-                  p_Prev_stdklei2,
-                  l_Wrk_stdklei2,
+                  p_stdklei3,
+                  p_Prev_stdklei3,
+                  l_Wrk_stdklei3,
                   p_Err_Code,
                   p_Err_Params) THEN
-                  Dbg('Failed in stpks_stdklei2_Custom.Fn_Post_Upload_Db After Logging');
+                  Dbg('Failed in stpks_stdklei3_Custom.Fn_Post_Upload_Db After Logging');
                   RETURN FALSE;
                END IF;
             END IF;
@@ -2428,7 +2420,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
    RETURN BOOLEAN IS
 
       E_Failure_Exception     EXCEPTION;
-      l_stdklei2     stpks_stdklei2_Main.Ty_stdklei2;
+      l_stdklei3     stpks_stdklei3_Main.Ty_stdklei3;
 
    BEGIN
 
@@ -2438,7 +2430,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Function_Id,
          p_Action_Code,
          p_Addl_Info,
-         l_stdklei2,
+         l_stdklei3,
          p_Err_Code,
          p_Err_Params)  THEN
          Dbg('Failed in Fn_Build_Type..');
@@ -2450,13 +2442,13 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Source_Operation,
          p_Function_Id,
          p_Action_Code,
-         l_stdklei2,
+         l_stdklei3,
          p_Err_Code,
          p_Err_Params)  THEN
          Dbg('Failed in Fn_Get_Key_Information..');
          RAISE e_Failure_Exception;
       END IF;
-      p_Addl_Info := l_stdklei2.Addl_Info;
+      p_Addl_Info := l_stdklei3.Addl_Info;
       Dbg('Returning from Fn_Extract_Custom_Data..');
       RETURN TRUE;
 
@@ -2496,7 +2488,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Function_Id,
          p_Action_Code,
          p_Exchange_Pattern,
-         g_stdklei2,
+         g_stdklei3,
          p_Err_Code,
          p_Err_Params)  THEN
          Dbg('Failed in Fn_Build_Ts_List');
@@ -2532,29 +2524,29 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
 
       Dbg('In Fn_Get_Node_Data..');
       l_Cntr  := Nvl(p_Node_Data.Count,0) + 1;
-      p_Node_Data(l_Cntr).Node_Name := 'BLK_KLEI2';
-      p_Node_Data(l_Cntr).Xsd_Node := 'Klei2';
+      p_Node_Data(l_Cntr).Node_Name := 'BLK_KLEI3';
+      p_Node_Data(l_Cntr).Xsd_Node := 'Klei3';
       p_Node_Data(l_Cntr).Node_Parent := '';
       p_Node_Data(l_Cntr).Node_Relation_Type := '1';
       p_Node_Data(l_Cntr).Query_Node := '0';
-      p_Node_Data(l_Cntr).Node_Fields := 'CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH~';
-      p_Node_Data(l_Cntr).Node_Tags := 'CATEGORY~DESCRIPTION~PRODUCT_RESTRICTION~RELATIONSHIP~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH~';
+      p_Node_Data(l_Cntr).Node_Fields := 'CUSTOMER_CATEGORY~CUSTOMER_TYPE~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH~';
+      p_Node_Data(l_Cntr).Node_Tags := 'CUSTOMER_CATEGORY~CUSTOMER_TYPE~MAKER~MAKERSTAMP~CHECKER~CHECKERSTAMP~MODNO~TXNSTAT~AUTHSTAT~ONCEAUTH~';
 
       l_Cntr  := Nvl(p_Node_Data.Count,0) + 1;
-      p_Node_Data(l_Cntr).Node_Name := 'BLK_KLEI2_DETAILS';
-      p_Node_Data(l_Cntr).Xsd_Node := 'Klei2-Details';
-      p_Node_Data(l_Cntr).Node_Parent := 'BLK_KLEI2';
+      p_Node_Data(l_Cntr).Node_Name := 'BLK_KLEI3_DETAILS';
+      p_Node_Data(l_Cntr).Xsd_Node := 'Klei3-Details';
+      p_Node_Data(l_Cntr).Node_Parent := 'BLK_KLEI3';
       p_Node_Data(l_Cntr).Node_Relation_Type := 'N';
       p_Node_Data(l_Cntr).Query_Node := '0';
-      p_Node_Data(l_Cntr).Node_Fields := 'RELATIONSHIP~PRODUCT_CODE~';
-      p_Node_Data(l_Cntr).Node_Tags := 'RELATIONSHIP~PRODUCT_CODE~';
+      p_Node_Data(l_Cntr).Node_Fields := 'CUSTOMER_CATEGORY~CUSTOMER_TYPE~FIELD_DESCRIPTION~MANDATORY_VALIDATIONS~';
+      p_Node_Data(l_Cntr).Node_Tags := 'CUSTOMER_CATEGORY~CUSTOMER_TYPE~FIELD_DESCRIPTION~MANDATORY_VALIDATIONS~';
 
       Dbg('Returning From Fn_Get_Node_Data.. ');
       RETURN TRUE;
 
    EXCEPTION
       WHEN OTHERS THEN
-         Debug.Pr_Debug('**','In When Others Of stpks_stdklei2_Main.Fn_Get_Node_Data..');
+         Debug.Pr_Debug('**','In When Others Of stpks_stdklei3_Main.Fn_Get_Node_Data..');
          Debug.Pr_Debug('**',SQLERRM);
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := NULL;
@@ -2566,7 +2558,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                               p_action_Code       IN     VARCHAR2,
                               p_Multi_Trip_Id     IN     VARCHAR2,
                               p_Request_No        IN     VARCHAR2,
-                              p_stdklei2          IN OUT stpks_stdklei2_Main.ty_stdklei2,
+                              p_stdklei3          IN OUT stpks_stdklei3_Main.ty_stdklei3,
                               p_Status            IN OUT VARCHAR2 ,
                               p_Err_Code          IN OUT VARCHAR2,
                               p_Err_Params        IN OUT VARCHAR2)
@@ -2577,9 +2569,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
       l_Resultant_Error_Type  VARCHAR2(32767):= 'I';
       l_Post_Upl_Stat         VARCHAR2(1) :='A';
       l_Prev_Auth_Stat        VARCHAR2(1) :='U';
-      l_Wrk_stdklei2    stpks_stdklei2_Main.Ty_stdklei2;
-      l_Prev_stdklei2    stpks_stdklei2_Main.Ty_stdklei2;
-      l_Dmy_stdklei2    stpks_stdklei2_Main.Ty_stdklei2;
+      l_Wrk_stdklei3    stpks_stdklei3_Main.Ty_stdklei3;
+      l_Prev_stdklei3    stpks_stdklei3_Main.Ty_stdklei3;
+      l_Dmy_stdklei3    stpks_stdklei3_Main.Ty_stdklei3;
       l_Pk_Or_Full    VARCHAR2(5) :='PK';
       l_Full_Data    VARCHAR2(1) := 'Y';
       l_With_Lock    VARCHAR2(1) := 'N';
@@ -2594,11 +2586,11 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
 
       Dbg('In Fn_Int_Main..');
 
-      SAVEPOINT Sp_Int_Main_Stdklei2;
+      SAVEPOINT Sp_Int_Main_Stdklei3;
       p_Status := 'S';
       g_Tanking_Status := l_Tanking_Status;
-      g_stdklei2 := p_stdklei2;
-      l_Wrk_stdklei2 := p_stdklei2;
+      g_stdklei3 := p_stdklei3;
+      l_Wrk_stdklei3 := p_stdklei3;
 
       Dbg('Calling  Fn_Check_Mandatory..');
       IF NOT Fn_Check_Mandatory(p_Source,
@@ -2606,7 +2598,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Function_Id,
          p_Action_Code,
          l_Pk_Or_Full,
-         p_stdklei2,
+         p_stdklei3,
          p_Err_Code,
          p_Err_Params)  THEN
          Dbg('Failed in Fn_Check_Mandatory..');
@@ -2618,13 +2610,13 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Source_Operation,
          p_Function_id,
          p_Action_Code,
-         p_stdklei2,
+         p_stdklei3,
          p_Err_Code,
          p_Err_Params)  THEN
          Dbg('Failed in Fn_Get_Key_Information..');
          RAISE e_Failure_Exception;
       END IF;
-      l_Sent_Mod_No := p_stdklei2.v_sttm_klei2.Mod_No;
+      l_Sent_Mod_No := p_stdklei3.v_sttm_klei3.Mod_No;
       Dbg('Calling Cspks_Req_Utils.Fn_Process_Tanked_Entries..');
       IF NOT Cspks_Req_Utils.Fn_Process_Tanked_Entries(p_Source,
          p_Source_Operation,
@@ -2648,8 +2640,8 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             l_Full_data,
             l_with_lock,
             l_Qrydata_Reqd,
-            p_stdklei2,
-            l_Wrk_stdklei2,
+            p_stdklei3,
+            l_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
             Dbg('Failed in Fn_Query..');
@@ -2662,9 +2654,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             p_Source_Operation,
             p_Function_Id,
             l_Action_Code,
-            p_stdklei2,
-            l_Prev_stdklei2,
-            l_Wrk_stdklei2,
+            p_stdklei3,
+            l_Prev_stdklei3,
+            l_Wrk_stdklei3,
             p_Err_Code,
             p_Err_Params) THEN
             Dbg('Failed in Fn_Default_And_Validate..');
@@ -2682,9 +2674,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                l_Action_Code,
                l_Post_Upl_Stat,
                p_Multi_Trip_Id,
-               p_stdklei2,
-               l_Prev_stdklei2,
-               l_Wrk_stdklei2,
+               p_stdklei3,
+               l_Prev_stdklei3,
+               l_Wrk_stdklei3,
                p_Err_Code,
                p_Err_Params) THEN
                Dbg('Failed in Fn_Upload_Db..');
@@ -2692,7 +2684,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                RAISE E_Failure_Exception;
             END IF;
             IF  l_Action_Code IN (Cspks_Req_Global.p_New,Cspks_Req_Global.p_Modify,Cspks_Req_Global.p_Close,Cspks_Req_Global.p_Reopen) THEN
-               l_Prev_Auth_Stat := NVL(l_Prev_stdklei2.v_sttm_klei2.Auth_Stat,'A') ;
+               l_Prev_Auth_Stat := NVL(l_Prev_stdklei3.v_sttm_klei3.Auth_Stat,'A') ;
                --Get Upload Status
                Dbg('Calling Cspks_Req_Utils.Fn_Get_Auto_Auth_Status..');
                IF NOT Cspks_Req_Utils.Fn_Get_Auto_Auth_Status (p_Source,
@@ -2722,9 +2714,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                         Cspks_Req_Global.p_auth,
                         l_Post_Upl_Stat,
                         p_Multi_Trip_Id,
-                        p_stdklei2,
-                        l_Prev_stdklei2,
-                        l_Wrk_stdklei2,
+                        p_stdklei3,
+                        l_Prev_stdklei3,
+                        l_Wrk_stdklei3,
                         p_Err_Code,
                         p_Err_Params) THEN
                         Dbg('Failed in Fn_Upload_Db..');
@@ -2760,8 +2752,8 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                      l_Full_Data,
                      l_With_Lock,
                      l_Qrydata_Reqd,
-                     l_Wrk_stdklei2,
-                     l_Wrk_stdklei2,
+                     l_Wrk_stdklei3,
+                     l_Wrk_stdklei3,
                      p_Err_Code,
                      p_Err_Params) THEN
                      Dbg('Failed in Fn_Query..');
@@ -2785,7 +2777,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             p_Source_Operation,
             p_Function_Id,
             l_Action_Code,
-            l_Wrk_stdklei2,
+            l_Wrk_stdklei3,
             l_Record_Master,
             p_Err_Code,
             p_Err_Params) THEN
@@ -2809,7 +2801,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
 
       Cspks_Req_Utils.Pr_Get_Final_Err_Code(p_Function_Id,l_Action_Code,l_Post_Upl_Stat,p_Err_Code,p_Err_Params);
       Pr_Log_Error(p_Source,p_Err_Code,p_Err_Params);
-      g_stdklei2 := l_wrk_stdklei2;
+      g_stdklei3 := l_wrk_stdklei3;
       g_post_upl_stat := l_Post_Upl_Stat;
       Dbg('Calling  Cspks_Req_Utils.Fn_Maint_Log..');
       IF NOT Fn_Maint_Log(p_Source,
@@ -2819,9 +2811,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Multi_Trip_Id,
          p_Request_No,
          l_Record_Master,
-         p_stdklei2,
-         l_Prev_stdklei2,
-         l_Wrk_stdklei2,
+         p_stdklei3,
+         l_Prev_stdklei3,
+         l_Wrk_stdklei3,
          l_Tanking_Status,
          p_Err_Code,
          p_Err_Params) THEN
@@ -2830,9 +2822,9 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          RAISE E_Failure_Exception;
       END IF;
       IF l_Action_Code = Cspks_Req_Global.p_Delete AND p_Source = 'FLEXCUBE'  THEN
-         l_Wrk_stdklei2 := l_Dmy_stdklei2;
+         l_Wrk_stdklei3 := l_Dmy_stdklei3;
       END IF;
-      p_stdklei2 := l_wrk_stdklei2;
+      p_stdklei3 := l_wrk_stdklei3;
       Dbg('Errors     :'||p_Err_Code);
       Dbg('Parameters :'||p_Err_Params);
 
@@ -2842,7 +2834,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
    EXCEPTION
       WHEN E_Failure_Exception THEN
          Dbg('From E_Failure_Exception of Fn_Int_Main..');
-         ROLLBACK TO Sp_Int_Main_Stdklei2;
+         ROLLBACK TO Sp_Int_Main_Stdklei3;
          p_Status        := 'F';
          l_Post_Upl_Stat := 'F';
          Cspks_Req_Utils.Pr_Get_Final_Err_Code(p_Function_Id,l_Action_Code,l_Post_Upl_Stat,p_Err_Code,p_Err_Params);
@@ -2870,7 +2862,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
       WHEN OTHERS THEN
          Debug.Pr_Debug('**','In When Others of Fn_Int_Main ..');
          Debug.Pr_Debug('**',SQLERRM);
-         ROLLBACK TO Sp_Int_Main_Stdklei2;
+         ROLLBACK TO Sp_Int_Main_Stdklei3;
          p_Status      := 'F';
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := Null;
@@ -2883,7 +2875,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                               p_Action_Code       IN     VARCHAR2,
                               p_Multi_Trip_Id     IN     VARCHAR2,
                               p_Request_No        IN     VARCHAR2,
-                              p_stdklei2          IN OUT stpks_stdklei2_Main.ty_stdklei2,
+                              p_stdklei3          IN OUT stpks_stdklei3_Main.ty_stdklei3,
                               p_Status            IN OUT VARCHAR2 ,
                               p_Err_Code          IN OUT VARCHAR2,
                               p_Err_Params        IN OUT VARCHAR2)
@@ -2895,7 +2887,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
    BEGIN
 
       Dbg('In Fn_Main..');
-      SAVEPOINT Sp_Main_Stdklei2;
+      SAVEPOINT Sp_Main_Stdklei3;
       Dbg('Calling  Fn_Int_Main..');
       IF NOT  Fn_Int_Main(p_Source,
          p_Source_Operation,
@@ -2903,7 +2895,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Action_Code,
          p_Multi_Trip_Id,
          p_Request_No,
-         p_stdklei2,
+         p_stdklei3,
          p_Status,
          p_Err_Code,
          p_Err_Params)  THEN
@@ -2921,7 +2913,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
    EXCEPTION
       WHEN E_Failure_Exception THEN
          Dbg('From E_Failure_Exception of Fn_Main');
-         ROLLBACK TO Sp_Main_Stdklei2;
+         ROLLBACK TO Sp_Main_Stdklei3;
          p_Status      := 'F';
          RETURN TRUE;
 
@@ -2936,7 +2928,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Status      := 'F';
          p_Err_Code    := 'ST-OTHR-001';
          p_Err_Params  := Null;
-         ROLLBACK TO Sp_Main_Stdklei2;
+         ROLLBACK TO Sp_Main_Stdklei3;
          RETURN FALSE;
    END Fn_Main;
 
@@ -2953,7 +2945,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
                               p_Err_Params        IN OUT VARCHAR2)
    RETURN BOOLEAN IS
 
-      l_stdklei2     stpks_stdklei2_Main.ty_stdklei2;
+      l_stdklei3     stpks_stdklei3_Main.ty_stdklei3;
 
    BEGIN
 
@@ -2963,7 +2955,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          p_Function_id,
          p_Action_Code,
          p_Addl_Info,
-         l_stdklei2,
+         l_stdklei3,
          p_Err_Code,
          p_Err_Params)  THEN
          Dbg('Failed in Fn_Build_Type..');
@@ -2977,7 +2969,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             p_Action_Code,
             p_Multi_Trip_Id,
             p_Request_No,
-            l_stdklei2,
+            l_stdklei3,
             p_Status,
             p_Err_Code,
             p_Err_Params)  THEN
@@ -2991,7 +2983,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             p_Action_Code,
             p_Multi_Trip_Id,
             p_Request_No,
-            l_stdklei2,
+            l_stdklei3,
             p_Status,
             p_Err_Code,
             p_Err_Params)  THEN
@@ -3000,7 +2992,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          END IF;
       END IF;
 
-      p_addl_info := l_stdklei2.Addl_Info;
+      p_addl_info := l_stdklei3.Addl_Info;
       IF Cspks_Req_Global.Fn_Build_Resp THEN
          Cspks_Req_Global.Pr_Reset;
          IF NOT  Fn_Build_Ts_List(p_Source,
@@ -3008,7 +3000,7 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
             p_Function_id,
             p_Action_Code,
             p_Exchange_Pattern,
-            l_stdklei2,
+            l_stdklei3,
             p_Err_Code,
             p_Err_Params)  THEN
             Dbg('Failed in Fn_Build_Ts_List..');
@@ -3030,5 +3022,5 @@ Pr_Log_Change('ONCE_AUTH',l_Rec_Action,p_Prev_stdklei2.v_sttm_klei2.once_auth,p_
          RETURN FALSE;
    END Fn_Process_Request;
 
-END stpks_stdklei2_main;
+END stpks_stdklei3_main;
 /
