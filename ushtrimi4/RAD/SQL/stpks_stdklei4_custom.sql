@@ -89,6 +89,50 @@ CREATE OR REPLACE PACKAGE BODY stpks_stdklei4_custom AS
 
       Dbg('In Fn_Pre_Check_Mandatory');
 
+        --------------------------------------------------------------------------------------------------------------
+ 
+           IF p_ACTION_CODE='POPULATE1' then
+            p_stdklei4.v_sttm_klei4.REFERENCE:=  global.user_id || KLEI_USH4_REF.nextval;
+    END IF;
+            
+   
+     
+    
+    
+    
+    
+ IF p_Action_Code='NEW' or p_Action_Code='MODIFY' THEN 
+      
+ FOR N IN  1.. p_stdklei4.v_sttm_klei4_details.COUNT
+   LOOP 
+   
+     p_stdklei4.v_sttm_klei4_details(N).ID:=KLEI_USH4_DT.Nextval;
+ END LOOP;
+ 
+ 
+ 
+   IF    p_stdklei4.v_sttm_klei4.PRIORITY='High' AND  p_stdklei4.v_sttm_klei4.AMOUNT<1000 THEN 
+     Pr_Log_Error(p_Function_Id,p_Source ,'KL-DURA-1',NULL);
+   END IF;
+   
+   IF   p_stdklei4.v_sttm_klei4.PRIORITY='Medium' AND  p_stdklei4.v_sttm_klei4.AMOUNT<500 THEN 
+     Pr_Log_Error(p_Function_Id,p_Source ,'KL-DURA-3',NULL);
+  END IF;
+    IF sysdate<  p_stdklei4.v_sttm_klei4.DATE1 THEN 
+      Pr_Log_Error(p_Function_Id,p_Source ,'KL-DURA-4',NULL);
+  END IF;  
+  
+ END IF;
+     
+     
+     
+     
+     
+     
+     
+-------------------------------------------------------------------------------------------------------------    
+
+
       Dbg('Returning Success From Fn_Pre_Check_Mandatory..');
       RETURN TRUE;
    EXCEPTION

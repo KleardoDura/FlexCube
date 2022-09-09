@@ -1,4 +1,4 @@
-function fnKleardoPopulate()
+function fnPostNew_CUSTOM()
 {
 clicked = true;
 appendData();
@@ -37,3 +37,17 @@ gAction=prevgAction;
 showProcessMsg = prevshowProcessMsg;
 return true;
 }
+
+ 
+var ref;
+
+ function fnPreCopy_CUSTOM(){
+ 
+	 ref=document.getElementById('BLK_KLEI4__REFERENCE').value;
+   return true;
+ }
+
+function  fnPostCopy_CUSTOM(){
+    document.getElementById('BLK_KLEI4__REFERENCE').value=ref+"C";
+	 	return true;
+ }
